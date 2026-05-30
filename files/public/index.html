@@ -199,43 +199,45 @@ svg{ display:block; }
 @keyframes sheen{ to{ transform:translateX(120%); } }
 
 /* ---------- PRE-BATTLE SETUP ---------- */
-.setup-inner{ width:min(1080px,96vw); margin:0 auto; height:100%; display:flex; flex-direction:column; padding:14px clamp(8px,2vw,20px); gap:12px; }
+.setup-inner{ width:min(1080px,96vw); margin:0 auto; height:100%; max-height:100vh; display:flex; flex-direction:column; padding:10px clamp(8px,2vw,20px); gap:8px; }
 .setup-top{ display:flex; align-items:center; gap:12px; }
-.setup-title{ flex:1; text-align:center; font-family:var(--font-display); font-size:clamp(20px,3vw,30px); letter-spacing:2px; color:#eaf2ff; }
+.setup-title{ flex:1; text-align:center; font-family:var(--font-display); font-size:clamp(18px,2.6vw,26px); letter-spacing:2px; color:#eaf2ff; }
 .setup-spacer{ width:46px; }
-.iconbtn{ width:46px;height:46px; border-radius:14px; background:var(--glass-2); border:1px solid var(--line); font-size:24px; font-weight:900; color:#cdd8ee; cursor:pointer; transition:transform .15s, background .15s, border-color .15s; }
+.iconbtn{ width:42px;height:42px; border-radius:14px; background:var(--glass-2); border:1px solid var(--line); font-size:22px; font-weight:900; color:#cdd8ee; cursor:pointer; transition:transform .15s, background .15s, border-color .15s; }
 .iconbtn:hover{ transform:translateX(-2px); background:var(--glass); border-color:var(--line-2); }
-.setup-cols{ flex:1; display:grid; grid-template-columns: 1fr 1.05fr; gap:18px; min-height:0; }
-.sec-label{ font-family:var(--font-display); font-size:12.5px; letter-spacing:2px; color:var(--muted); margin:2px 0 8px; }
+.setup-cols{ flex:1; display:grid; grid-template-columns: 1fr 1.05fr; gap:16px; min-height:0; }
+.sec-label{ font-family:var(--font-display); font-size:11.5px; letter-spacing:2px; color:var(--muted); margin:1px 0 6px; }
 .setup-left, .setup-right{ overflow-y:auto; padding:2px 4px; min-height:0; }
 .setup-right{ display:flex; flex-direction:column; }
+.seat-note{ font-size:11.5px; line-height:1.4; color:var(--dim); background:rgba(0,0,0,.22); border:1px solid var(--line); border-radius:10px; padding:8px 11px; margin:4px 0 8px; }
+.seat-note b{ color:#dfe8ff; }
 
-.herocard-list{ display:flex; flex-direction:column; gap:10px; }
-.herocard{ display:flex; align-items:center; gap:14px; padding:12px 14px; border-radius:16px; text-align:left; cursor:pointer;
+.herocard-list{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.herocard{ display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:16px; text-align:left; cursor:pointer; min-width:0;
   background:linear-gradient(120deg, hsla(var(--hue),45%,24%,.4), var(--glass-2)); border:1px solid var(--line);
   transition: transform .16s cubic-bezier(.2,.9,.3,1.3), border-color .16s, box-shadow .16s; }
-.herocard:hover{ transform:translateX(4px); border-color:hsla(var(--hue),80%,62%,.7); box-shadow:0 10px 26px hsla(var(--hue),70%,30%,.4); }
+.herocard:hover{ transform:translateY(-3px); border-color:hsla(var(--hue),80%,62%,.7); box-shadow:0 10px 26px hsla(var(--hue),70%,30%,.4); }
 .herocard.sel{ border-color:hsla(var(--hue),90%,66%,.95); box-shadow:0 0 0 2px hsla(var(--hue),90%,64%,.55), 0 12px 30px hsla(var(--hue),75%,35%,.5); background:linear-gradient(120deg, hsla(var(--hue),55%,30%,.6), var(--glass-2)); }
-.hc-portrait{ width:56px;height:56px;flex:0 0 auto; display:grid;place-items:center; border-radius:50%; background:radial-gradient(circle at 38% 32%, hsla(var(--hue),70%,55%,.6), hsla(var(--hue),60%,22%,.7)); border:2px solid hsla(var(--hue),80%,60%,.6); }
-.hc-portrait svg{ width:40px;height:40px; }
+.hc-portrait{ width:48px;height:48px;flex:0 0 auto; display:grid;place-items:center; border-radius:50%; background:radial-gradient(circle at 38% 32%, hsla(var(--hue),70%,55%,.6), hsla(var(--hue),60%,22%,.7)); border:2px solid hsla(var(--hue),80%,60%,.6); }
+.hc-portrait svg{ width:34px;height:34px; }
 .hc-body{ flex:1; min-width:0; }
-.hc-namerow{ display:flex; align-items:center; gap:8px; }
-.hc-name{ font-family:var(--font-display); font-size:17px; }
-.hc-title{ font-size:11.5px; color:var(--muted); font-weight:800; }
-.hc-facs{ display:flex; gap:5px; margin-top:5px; flex-wrap:wrap; }
-.fac-chip{ font-size:10px; font-weight:900; letter-spacing:.4px; padding:2px 8px; border-radius:999px; color:hsla(var(--fc),90%,82%,1); background:hsla(var(--fc),70%,40%,.22); border:1px solid hsla(var(--fc),80%,60%,.4); }
-.diff{ font-size:10px; font-weight:900; letter-spacing:.5px; padding:2px 9px; border-radius:999px; text-transform:uppercase; }
+.hc-namerow{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.hc-name{ font-family:var(--font-display); font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.hc-title{ font-size:10.5px; color:var(--muted); font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hc-facs{ display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
+.fac-chip{ font-size:9px; font-weight:900; letter-spacing:.3px; padding:2px 7px; border-radius:999px; color:hsla(var(--fc),90%,82%,1); background:hsla(var(--fc),70%,40%,.22); border:1px solid hsla(var(--fc),80%,60%,.4); }
+.diff{ font-size:9px; font-weight:900; letter-spacing:.5px; padding:2px 8px; border-radius:999px; text-transform:uppercase; }
 .diff.easy{ color:#bdf5c8; background:rgba(80,220,120,.18); border:1px solid rgba(80,220,120,.5); }
 .diff.med{ color:#ffe0a3; background:rgba(255,190,80,.16); border:1px solid rgba(255,190,80,.5); }
 .diff.hard{ color:#ffb3bd; background:rgba(255,90,110,.16); border:1px solid rgba(255,90,110,.5); }
 
-.hero-detail{ border-radius:18px; padding:18px; background:linear-gradient(160deg, hsla(var(--hue),45%,22%,.5), var(--glass)); border:1px solid hsla(var(--hue),60%,55%,.35); display:flex; flex-direction:column; align-items:center; text-align:center; gap:4px; margin-bottom:12px; }
-.hd-portrait{ width:84px;height:84px; display:grid;place-items:center; border-radius:50%; background:radial-gradient(circle at 38% 32%, hsla(var(--hue),72%,56%,.7), hsla(var(--hue),60%,22%,.8)); border:3px solid hsla(var(--hue),85%,62%,.7); box-shadow:0 0 26px hsla(var(--hue),80%,50%,.4); }
-.hd-portrait svg{ width:60px;height:60px; }
-.hd-name{ font-family:var(--font-display); font-size:23px; margin-top:6px; }
-.hd-title{ font-size:12px; color:var(--muted); font-weight:800; }
-.hd-facs{ display:flex; gap:6px; margin:6px 0; flex-wrap:wrap; justify-content:center; }
-.hd-power{ width:100%; margin-top:6px; border-radius:12px; background:rgba(0,0,0,.28); border:1px solid var(--line); padding:10px 12px; text-align:left; }
+.hero-detail{ border-radius:16px; padding:12px 16px; background:linear-gradient(160deg, hsla(var(--hue),45%,22%,.5), var(--glass)); border:1px solid hsla(var(--hue),60%,55%,.35); display:flex; flex-direction:column; align-items:center; text-align:center; gap:2px; margin-bottom:8px; }
+.hd-portrait{ width:64px;height:64px; display:grid;place-items:center; border-radius:50%; background:radial-gradient(circle at 38% 32%, hsla(var(--hue),72%,56%,.7), hsla(var(--hue),60%,22%,.8)); border:3px solid hsla(var(--hue),85%,62%,.7); box-shadow:0 0 26px hsla(var(--hue),80%,50%,.4); }
+.hd-portrait svg{ width:46px;height:46px; }
+.hd-name{ font-family:var(--font-display); font-size:20px; margin-top:4px; }
+.hd-title{ font-size:11.5px; color:var(--muted); font-weight:800; }
+.hd-facs{ display:flex; gap:6px; margin:5px 0; flex-wrap:wrap; justify-content:center; }
+.hd-power{ width:100%; margin-top:4px; border-radius:12px; background:rgba(0,0,0,.28); border:1px solid var(--line); padding:8px 11px; text-align:left; }
 .hd-power-head{ display:flex; align-items:center; justify-content:space-between; }
 .hd-power-name{ font-family:var(--font-display); font-size:15px; color:#ffe08a; }
 .hd-power-cost{ position:relative; width:26px;height:26px; display:grid;place-items:center; font-family:var(--font-display); font-size:13px; }
@@ -265,6 +267,9 @@ svg{ display:block; }
 @media (max-width:780px){
   .setup-cols{ grid-template-columns:1fr; overflow-y:auto; }
   .setup-left, .setup-right{ overflow:visible; }
+}
+@media (max-width:430px){
+  .herocard-list{ grid-template-columns:1fr; }
 }
 
 /* ---------- PLAY A FRIEND: menu buttons ---------- */
@@ -376,8 +381,27 @@ svg{ display:block; }
 .hpcrystal .val{ position:absolute; font-family:var(--font-display); font-size:22px; color:#fff; text-shadow:0 2px 3px rgba(0,0,0,.6); }
 .hpcrystal.hit{ animation: hpHit .4s ease; }
 @keyframes hpHit{ 0%{transform:scale(1)} 30%{transform:scale(1.35)} 100%{transform:scale(1)} }
+.hpcrystal.blocking{ animation: hpBlock .6s cubic-bezier(.2,.8,.3,1.1); }
+@keyframes hpBlock{ 0%{transform:scale(1)} 18%{transform:scale(.86)} 42%{transform:scale(1.28)} 100%{transform:scale(1)} }
+.hpcrystal.blocking::after{
+  content:''; position:absolute; inset:-14px; border-radius:50%;
+  border:3px solid rgba(150,225,255,.95);
+  box-shadow:0 0 26px rgba(130,210,255,.9), inset 0 0 22px rgba(160,225,255,.7);
+  animation: shieldPop .6s ease-out forwards; pointer-events:none;
+}
+@keyframes shieldPop{ 0%{ transform:scale(.55); opacity:0 } 30%{ opacity:1 } 100%{ transform:scale(1.5); opacity:0 } }
+.d-block{ color:#bfe9ff !important; text-shadow:0 0 12px rgba(150,225,255,.9); font-weight:900; }
 
 .deckpile{ display:flex; align-items:center; gap:6px; color:var(--muted); font-weight:900; font-size:12px; }
+.counts{ display:flex; align-items:center; gap:12px; }
+.ct{ display:flex; align-items:center; gap:5px; color:var(--muted); font-weight:900; font-size:12px; }
+.ct .ci{ font-size:13px; opacity:.85; filter:grayscale(.2); }
+.ct.hand .num{ color:#dfe8ff; }
+.ct.hand{ position:relative; }
+.ct.hand::after{ content:'hand'; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; }
+.energy-name{ font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; margin-left:4px; align-self:flex-end; }
+#concedebtn{ font-size:18px; color:#ff9aa6; }
+#concedebtn:hover{ background:rgba(255,90,110,.16); border-color:rgba(255,90,110,.5); }
 .deckpile .stack{
   width:26px;height:34px;border-radius:5px; position:relative;
   background:linear-gradient(160deg,#33508c,#1a2c52); border:1px solid var(--line-2);
@@ -554,6 +578,23 @@ svg{ display:block; }
 .card .kwrow{ display:flex; gap:3px; justify-content:center; margin-bottom:3px; min-height:14px; }
 .card .kwpip{ width:14px;height:14px;border-radius:4px; display:grid;place-items:center; background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.25); }
 .card .kwpip svg{ width:10px;height:10px; }
+.kwpip.dormant{ opacity:.32; border-style:dashed !important; filter:grayscale(1); position:relative; }
+.hc-side{ display:inline-block; font-size:10px; font-weight:900; letter-spacing:1.5px; text-transform:uppercase; padding:2px 9px; border-radius:999px; margin:3px 0; color:hsl(var(--sc),85%,82%); background:hsla(var(--sc),70%,50%,.16); border:1px solid hsla(var(--sc),75%,60%,.5); }
+/* side rosters in setup */
+.side-group{ margin-bottom:14px; }
+.side-header{ display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-size:15px; letter-spacing:1px; color:hsl(var(--sc),85%,80%); padding:6px 2px; border-bottom:1px solid hsla(var(--sc),70%,55%,.35); margin-bottom:10px; }
+.side-header .side-dot{ width:12px;height:12px;border-radius:50%; background:hsl(var(--sc),75%,60%); box-shadow:0 0 10px hsla(var(--sc),80%,60%,.8); }
+.side-header small{ font-family:var(--font-body); font-weight:700; font-size:11px; letter-spacing:0; color:var(--muted); margin-left:auto; max-width:60%; text-align:right; }
+.herocard.side-radiant{ border-left:3px solid hsla(44,75%,60%,.7); }
+.herocard.side-umbral{ border-left:3px solid hsla(268,75%,65%,.7); }
+/* keyword pip side tints */
+.kwpip.kw-umbral{ box-shadow:inset 0 0 0 1px hsla(268,80%,68%,.7); }
+.kwpip.kw-radiant{ box-shadow:inset 0 0 0 1px hsla(44,80%,62%,.7); }
+/* side tag in match HUD */
+.side-tag{ display:inline-block; font-weight:900; font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:1px 6px; border-radius:999px; color:hsl(var(--sc),85%,82%); background:hsla(var(--sc),70%,50%,.2); border:1px solid hsla(var(--sc),75%,60%,.55); }
+.heroplate.side-radiant{ box-shadow:inset 3px 0 0 hsla(44,75%,60%,.6); }
+.heroplate.side-umbral{ box-shadow:inset 3px 0 0 hsla(268,75%,65%,.6); }
+.kwpip.dormant::after{ content:''; position:absolute; left:1px; right:1px; top:50%; height:1.5px; background:rgba(255,120,120,.8); transform:rotate(-20deg); }
 .card .stat{ position:absolute; bottom:6px; }
 .card .stat.atk{ left:6px; }
 .card .stat.hp{ right:6px; }
@@ -938,6 +979,23 @@ function shuffle(arr,rng){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ c
 const H = {
   ember:14, dawn:44, flux:128, null:268, sky:202, prism:320
 };
+
+/* ---- SIDES (Plants-vs-Zombies-style rosters) ----
+   Every faction belongs to one of two sides. A hero belongs to a side and builds
+   from that side's factions + neutral Prism. Radiant is the value/board side;
+   Umbral is the aggro/tempo side. The per-match Vanguard/Responder turn order is
+   separate from side and still rotates. */
+const SIDES = {
+  radiant: { name:'Radiant', factions:['ember','dawn','flux'], hue:H.dawn,
+             blurb:'Light, growth, and renewal — out-value the board and grind the long game.' },
+  umbral:  { name:'Umbral',  factions:['null','sky'],          hue:H.null,
+             blurb:'Void and storm — strike fast, go wide, and crack the crystal before they stabilize.' }
+};
+const FACTION_SIDE = (()=>{ const m={}; for(const s in SIDES) for(const f of SIDES[s].factions) m[f]=s; return m; })();
+function sideOfFaction(f){ return FACTION_SIDE[f]||null; }
+function sideOfHero(heroId){ const h=getHero(heroId); return h.side || sideOfFaction((h.facs||[])[0]) || 'radiant'; }
+// The buildable faction set for a hero = its SIDE's factions + neutral Prism.
+function factionsForHero(heroId){ const s=sideOfHero(heroId); return new Set([...(SIDES[s]?SIDES[s].factions:[]), 'prism']); }
 function hsl(h,s,l){ return `hsl(${h} ${s}% ${l}%)`; }
 function eyes(){ return `<g><circle cx="25" cy="30" r="5.4" fill="#fff"/><circle cx="39" cy="30" r="5.4" fill="#fff"/><circle cx="26" cy="31" r="2.6" fill="#10131f"/><circle cx="40" cy="31" r="2.6" fill="#10131f"/><circle cx="27" cy="30" r=".9" fill="#fff"/></g>`; }
 // base silhouettes; each: (hue)=>inner svg markup, drawn in 64x64
@@ -990,11 +1048,11 @@ C({id:'p_sentinel',name:'Rift Sentinel',fac:'prism',cost:4,type:'unit',rar:'Rare
 C({id:'p_weaver',name:'Lightweaver',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:2,hp:3,shape:'star',text:'Battlecry: Heal your Hero 3.',eff:{kind:'healHero',amt:3,placement:'global'}});
 C({id:'p_surge',name:'Energy Surge',fac:'prism',cost:0,type:'spell',rar:'Common',shape:'star',text:'Gain +1 energy this turn.',eff:{kind:'gainEnergy',amt:1,placement:'global'}});
 C({id:'p_insight',name:'Insight',fac:'prism',cost:2,type:'spell',rar:'Common',shape:'star',text:'Draw 2 cards.',eff:{kind:'draw',amt:2,placement:'global'}});
-C({id:'p_colossus',name:'Prism Colossus',fac:'prism',cost:6,type:'unit',rar:'Legendary',atk:6,hp:6,kw:['Frenzy'],shape:'bulky',text:'Frenzy.'});
+C({id:'p_colossus',name:'Prism Colossus',fac:'prism',cost:6,type:'unit',rar:'Legendary',atk:6,hp:6,kw:['Armored'],shape:'bulky',text:'Frenzy.'});
 
 // --- Emberwake (aggro / burn) ---
 C({id:'e_imp',name:'Cinder Imp',fac:'ember',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'imp',text:'Eager to burn.'});
-C({id:'e_hounds',name:'Ember Hounds',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Frenzy'],shape:'imp',text:'Frenzy.'});
+C({id:'e_hounds',name:'Ember Hounds',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Rage'],shape:'imp',text:'Frenzy.'});
 C({id:'e_brute',name:'Magma Brute',fac:'ember',cost:4,type:'unit',rar:'Rare',atk:5,hp:4,shape:'bulky',text:'Smolders with fury.'});
 C({id:'e_meteor',name:'Meteor Note',fac:'ember',cost:2,type:'spell',rar:'Common',shape:'star',text:'Deal 2 to a lane and apply Burn 1.',eff:{kind:'laneDamage',amt:2,burn:1,placement:'lane'}});
 C({id:'e_wildfire',name:'Wildfire',fac:'ember',cost:3,type:'spell',rar:'Epic',shape:'star',text:'Deal 1 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:1,placement:'global'}});
@@ -1012,7 +1070,7 @@ C({id:'d_decree',name:'Radiant Decree',fac:'dawn',cost:4,type:'spell',rar:'Epic'
 
 // --- Fluxwild (swarm / ramp / tokens) ---
 C({id:'f_sapling',name:'Sapling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:1,shape:'leaf',text:'A tiny sprout.'});
-C({id:'f_thorn',name:'Thornling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:2,kw:['Deadly'],shape:'leaf',text:'Deadly.'});
+C({id:'f_thorn',name:'Thornling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:2,kw:['Strikethrough'],shape:'leaf',text:'Deadly.'});
 C({id:'f_pack',name:'Bramble Pack',fac:'flux',cost:3,type:'spell',rar:'Rare',shape:'leaf',text:'Summon two 1/1 Saplings to a lane and an adjacent lane.',eff:{kind:'summonSpread',token:'f_sapling',placement:'lane',ally:true}});
 C({id:'f_tender',name:'Grove Tender',fac:'flux',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,shape:'leaf',text:'Battlecry: Your units gain +1/+1.',eff:{kind:'rally',atk:1,hp:1,placement:'global'}});
 C({id:'f_growth',name:'Wildgrowth',fac:'flux',cost:2,type:'spell',rar:'Common',shape:'leaf',text:'Permanently gain +1 max energy.',eff:{kind:'gainMaxEnergy',amt:1,placement:'global'}});
@@ -1047,7 +1105,7 @@ C({id:'p_shatter',name:'Shatterlight',fac:'prism',cost:3,type:'spell',rar:'Rare'
 // Ember (aggro / burn)
 C({id:'e_raider',name:'Ash Raider',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,shape:'imp',text:'Eager for embers.'});
 C({id:'e_cinderspit',name:'Cinderspit',fac:'ember',cost:1,type:'spell',rar:'Common',shape:'star',text:'Deal 1 to a lane and apply Burn 1.',eff:{kind:'laneDamage',amt:1,burn:1,placement:'lane'}});
-C({id:'e_flamevow',name:'Flamevow Zealot',fac:'ember',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
+C({id:'e_flamevow',name:'Flamevow Zealot',fac:'ember',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,kw:['Lifesteal'],shape:'winged',text:'Double Strike.'});
 C({id:'e_emberlord',name:'Emberlord',fac:'ember',cost:5,type:'unit',rar:'Rare',atk:5,hp:4,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 C({id:'e_eruption',name:'Eruption',fac:'ember',cost:4,type:'spell',rar:'Epic',shape:'star',text:'Deal 2 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:2,placement:'global'}});
 // Dawn (armor / defense / buff)
@@ -1088,7 +1146,7 @@ C({id:'f_thornking',name:'Thorn King',fac:'flux',cost:6,type:'unit',rar:'Legenda
 C({id:'n_assassin',name:'Null Assassin',fac:'null',cost:3,type:'unit',rar:'Epic',atk:2,hp:2,kw:['Deadly'],shape:'serpent',text:'Deadly.'});
 C({id:'n_reaper',name:'Void Reaper',fac:'null',cost:5,type:'unit',rar:'Epic',atk:3,hp:4,kw:['Deadly'],shape:'cloak',text:'Deadly.'});
 C({id:'n_jolt',name:'Stasis Jolt',fac:'null',cost:2,type:'spell',rar:'Rare',shape:'cloak',text:'Stun an enemy unit (skips its next attack).',eff:{kind:'stun',placement:'lane',unitOnly:true}});
-C({id:'s_raptor',name:'Gale Raptor',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'s_raptor',name:'Gale Raptor',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Double Strike'],shape:'winged',text:'Strikethrough.'});
 C({id:'s_skydiver',name:'Sky Diver',fac:'sky',cost:3,type:'unit',rar:'Epic',atk:3,hp:3,shape:'winged',text:'A daring raider.'});
 C({id:'s_squall',name:'Squall',fac:'sky',cost:3,type:'spell',rar:'Rare',shape:'star',text:'Deal 3 to an enemy unit.',eff:{kind:'laneDamage',amt:3,placement:'lane',unitOnly:true}});
 C({id:'p_warden',name:'Prism Warden',fac:'prism',cost:4,type:'unit',rar:'Epic',atk:4,hp:5,shape:'block',text:'A radiant bruiser.'});
@@ -1097,12 +1155,12 @@ C({id:'p_warden',name:'Prism Warden',fac:'prism',cost:4,type:'unit',rar:'Epic',a
 // Prism (neutral)
 C({id:'p2_runner',name:'Rift Runner',fac:'prism',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'star',text:'Fast and fragile.'});
 C({id:'p2_warden',name:'Prism Bulwark',fac:'prism',cost:3,type:'unit',rar:'Common',atk:2,hp:5,shape:'block',text:'A steadfast wall.'});
-C({id:'p2_blade',name:'Shardblade Adept',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:3,hp:3,kw:['Deadly'],shape:'helm',text:'Deadly.'});
+C({id:'p2_blade',name:'Shardblade Adept',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:3,hp:3,kw:['Armored'],shape:'helm',text:'Deadly.'});
 C({id:'p2_seer',name:'Rift Seer',fac:'prism',cost:4,type:'unit',rar:'Epic',atk:3,hp:4,shape:'hero',text:'Battlecry: Draw a card.',eff:{kind:'draw',amt:1,placement:'global'}});
 C({id:'p2_focus',name:'Refraction',fac:'prism',cost:2,type:'spell',rar:'Common',shape:'star',text:'Draw 2 cards.',eff:{kind:'draw',amt:2,placement:'global'}});
 // Ember (aggro / burn)
 C({id:'e2_imp',name:'Spark Imp',fac:'ember',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'imp',text:'Itching for a fight.'});
-C({id:'e2_zealot',name:'Ash Zealot',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Frenzy'],shape:'imp',text:'Frenzy.'});
+C({id:'e2_zealot',name:'Ash Zealot',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Lifesteal'],shape:'imp',text:'Frenzy.'});
 C({id:'e2_marauder',name:'Cinder Marauder',fac:'ember',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 C({id:'e2_vortex',name:'Flame Vortex',fac:'ember',cost:3,type:'spell',rar:'Rare',shape:'star',text:'Deal 1 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:1,placement:'global'}});
 C({id:'e2_bolt',name:'Ember Bolt',fac:'ember',cost:1,type:'spell',rar:'Common',shape:'star',text:'Deal 2 to a lane (unit or Hero).',eff:{kind:'laneDamage',amt:2,placement:'lane'}});
@@ -1127,7 +1185,7 @@ C({id:'n2_chill',name:'Hoarfrost',fac:'null',cost:3,type:'spell',rar:'Rare',shap
 // Sky (tempo / strikethrough)
 C({id:'s2_scout',name:'Wind Darter',fac:'sky',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'winged',text:'Darts in fast.'});
 C({id:'s2_skirmisher',name:'Gust Skirmisher',fac:'sky',cost:2,type:'unit',rar:'Common',atk:3,hp:2,shape:'winged',text:'Hit-and-run.'});
-C({id:'s2_striker',name:'Tempest Striker',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'s2_striker',name:'Tempest Striker',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Frenzy'],shape:'winged',text:'Strikethrough.'});
 C({id:'s2_double',name:'Twin Cyclone',fac:'sky',cost:5,type:'unit',rar:'Epic',atk:3,hp:4,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
 C({id:'s2_surge',name:'Tailwind',fac:'sky',cost:1,type:'spell',rar:'Common',shape:'star',text:'Give a friendly unit +2/+1.',eff:{kind:'updraft',placement:'lane',ally:true}});
 
@@ -1136,7 +1194,7 @@ C({id:'s2_surge',name:'Tailwind',fac:'sky',cost:1,type:'spell',rar:'Common',shap
 C({id:'hi_p_avatar',name:'Prism Avatar',fac:'prism',cost:7,type:'unit',rar:'Legendary',atk:7,hp:7,shape:'bulky',text:'A towering construct of pure light.'});
 C({id:'hi_p_arbiter',name:'Rift Arbiter',fac:'prism',cost:9,type:'unit',rar:'Legendary',atk:8,hp:8,kw:['Armored'],armor:2,shape:'bulky',text:'Armored 2.'});
 // Ember (aggro / burn)
-C({id:'hi_e_warlord',name:'Ember Warlord',fac:'ember',cost:7,type:'unit',rar:'Epic',atk:7,hp:5,kw:['Frenzy'],shape:'bulky',text:'Frenzy.'});
+C({id:'hi_e_warlord',name:'Ember Warlord',fac:'ember',cost:7,type:'unit',rar:'Epic',atk:7,hp:5,kw:['Rage'],shape:'bulky',text:'Frenzy.'});
 C({id:'hi_e_meteor',name:'Meteor Fall',fac:'ember',cost:8,type:'spell',rar:'Legendary',shape:'star',text:'Deal 4 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:4,placement:'global'}});
 C({id:'hi_e_titan',name:'Magma Titan',fac:'ember',cost:10,type:'unit',rar:'Legendary',atk:10,hp:8,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 // Dawn (armor / lifesteal / defense)
@@ -1153,11 +1211,12 @@ C({id:'hi_n_oblivion',name:'Total Oblivion',fac:'null',cost:9,type:'spell',rar:'
 C({id:'hi_n_eternity',name:'Eternity Warden',fac:'null',cost:10,type:'unit',rar:'Legendary',atk:8,hp:9,kw:['Deadly','Armored'],armor:1,shape:'bulky',text:'Deadly. Armored 1.'});
 // Sky (tempo / strikethrough)
 C({id:'hi_s_tempest',name:'Tempest Sovereign',fac:'sky',cost:7,type:'unit',rar:'Epic',atk:6,hp:5,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
-C({id:'hi_s_leviathan',name:'Storm Leviathan',fac:'sky',cost:8,type:'unit',rar:'Legendary',atk:8,hp:6,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'hi_s_leviathan',name:'Storm Leviathan',fac:'sky',cost:8,type:'unit',rar:'Legendary',atk:8,hp:6,kw:['Double Strike'],shape:'winged',text:'Strikethrough.'});
 C({id:'hi_s_maelstrom',name:'Maelstrom',fac:'sky',cost:10,type:'spell',rar:'Legendary',shape:'star',text:'Deal 3 to all enemy units, then draw 3.',eff:{kind:'tempest',amt:3,draw:3,placement:'global'}});
 
 // --- SUPERPOWERS (granted by the Block Meter; fac 'super' keeps them out of decks) ---
 C({id:'tok_bloom',name:'Bloom',fac:'super',cost:0,type:'unit',rar:'Common',atk:2,hp:2,shape:'leaf',text:'A burst of life.'});
+C({id:'tok_gnat',name:'Gnat',fac:'super',cost:0,type:'unit',rar:'Common',atk:1,hp:1,shape:'winged',text:'A buzzing swarm-fly.'});
 C({id:'sp_nova',name:'Sunflare Nova',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'star',text:'Deal 2 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:2,placement:'global'}});
 C({id:'sp_aegisdawn',name:'Dawnward Aegis',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'helm',text:'Your units gain +0/+2 and a Shield.',eff:{kind:'massBuff',hp:2,shield:true,placement:'global'}});
 C({id:'sp_phoenix',name:'Phoenix Heart',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'star',text:'Heal your Hero 4. Your units gain +1/+0.',eff:{kind:'massBuff',atk:1,heal:4,placement:'global'}});
@@ -1168,34 +1227,51 @@ C({id:'sp_overgrowth',name:'Overgrowth',fac:'super',cost:0,type:'spell',rar:'Leg
 C({id:'sp_grovewall',name:'Heart of the Grove',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'leaf',text:'Your units gain +1/+3.',eff:{kind:'massBuff',atk:1,hp:3,placement:'global'}});
 C({id:'sp_skyassault',name:'Sky Assault',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Your units gain +2/+1.',eff:{kind:'massBuff',atk:2,hp:1,placement:'global'}});
 C({id:'sp_firewing',name:'Firewing Barrage',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Deal 1 to all enemies and the enemy Hero, then draw.',eff:{kind:'wildfire',amt:1,draw:1,placement:'global'}});
+C({id:'sp_galecut',name:'Galecut Surge',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Your units gain +1/+1, then draw a card.',eff:{kind:'massBuff',atk:1,hp:1,draw:1,placement:'global'}});
+C({id:'sp_emberveil',name:'Emberveil Reckoning',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'serpent',text:'Destroy the strongest enemy unit, then deal 1 to the enemy Hero.',eff:{kind:'destroyStrongest',heroDamage:1,placement:'global'}});
 
 const getCard=id=>CARDS[id];
 
 /* ====================== DATA: HEROES ====================== */
 const HEROES = [
-  {id:'solara', name:'Solara Vek', title:'The Kindled Dawn', facs:['ember','dawn'], hue:H.dawn,
+  {id:'solara', side:'radiant', name:'Solara Vek', title:'The Kindled Dawn', facs:['ember','dawn'], hue:H.dawn,
     power:{name:'Sunflare', cost:2, text:'Deal 1 damage to a lane (unit or Hero).', placement:'lane', kind:'laneDamage', amt:1},
     difficulty:'Easy', playstyle:'Aggressive burn — trade efficiently and chip the rival down with direct damage.',
-    supers:['sp_nova','sp_aegisdawn','sp_phoenix']},
-  {id:'vesper', name:'Vesper Quill', title:'Whisper of the Null', facs:['null','sky'], hue:H.null,
+    supers:['sp_nova','sp_aegisdawn','sp_phoenix','sp_grovewall']},
+  {id:'vesper', side:'umbral', name:'Vesper Quill', title:'Whisper of the Null', facs:['null','sky'], hue:H.null,
     power:{name:'Hush', cost:2, text:'Freeze the enemy unit in a lane.', placement:'lane', kind:'freezeLane'},
     difficulty:'Hard', playstyle:'Control — freeze threats, stall the board, and grind out the late game.',
-    supers:['sp_freeze','sp_nullstorm','sp_voidcall']},
-  {id:'bram',  name:'Bram Mossfist', title:'Warden of the Grove', facs:['flux','dawn'], hue:H.flux,
+    supers:['sp_freeze','sp_nullstorm','sp_voidcall','sp_skyassault']},
+  {id:'bram', side:'radiant',  name:'Bram Mossfist', title:'Warden of the Grove', facs:['flux','dawn'], hue:H.flux,
     power:{name:'Sprout', cost:2, text:'Summon a 1/1 Sapling to a lane.', placement:'lane', kind:'summonToken', token:'f_sapling', ally:true},
     difficulty:'Medium', playstyle:'Go-wide swarm — flood the lanes with bodies and buff them all at once.',
-    supers:['sp_overgrowth','sp_grovewall','sp_phoenix']},
-  {id:'kestrel',name:'Kestrel Vane', title:'Edge of the Sky', facs:['sky','ember'], hue:H.sky,
+    supers:['sp_overgrowth','sp_grovewall','sp_phoenix','sp_galecut']},
+  {id:'kestrel', side:'umbral',name:'Kestrel Vane', title:'Edge of the Sky', facs:['sky','null'], hue:H.sky,
     power:{name:'Updraft', cost:1, text:'Give a friendly unit +1/+1.', placement:'lane', kind:'buffUnit', atk:1, hp:1, ally:true},
     difficulty:'Medium', playstyle:'Tempo — cheap fliers and a 1-cost buff to snowball early pressure.',
-    supers:['sp_skyassault','sp_firewing','sp_nova']},
+    supers:['sp_skyassault','sp_firewing','sp_nova','sp_galecut']},
+  {id:'tarn', side:'radiant',  name:'Tarn Vellurae', title:'The Tidal Current', facs:['flux','dawn'], hue:H.flux,
+    power:{name:'Surge', cost:1, text:'Give a friendly unit +2/+0.', placement:'lane', kind:'buffUnit', atk:2, hp:0, ally:true},
+    difficulty:'Medium', playstyle:'Value tempo — as Responder, lean on Strikethrough overflow and Lifesteal swings to win long boards.',
+    supers:['sp_galecut','sp_skyassault','sp_overgrowth','sp_nullstorm']},
+  {id:'ashka', side:'umbral', name:'Ashka Rune', title:'The Cinder Verdict', facs:['null','sky'], hue:H.null,
+    power:{name:'Scorch', cost:2, text:'Deal 2 damage to an enemy unit in a lane.', placement:'lane', kind:'laneDamage', amt:2, unitOnly:true},
+    difficulty:'Hard', playstyle:'Aggressive control — as Vanguard, weaponize Deadly removal and Frenzy beaters to push lethal.',
+    supers:['sp_emberveil','sp_nova','sp_voidcall','sp_freeze']},
+  {id:'zix',   side:'umbral', name:'Zix Marrow', title:'The Swarmcaller', facs:['null','sky'], hue:H.sky,
+    power:{name:'Brood', cost:2, text:'Summon two 1/1 Gnats to empty lanes.', placement:'self', kind:'summonSpread', token:'tok_gnat', count:2, ally:true},
+    difficulty:'Medium', playstyle:'Go-wide swarm — flood lanes with cheap fliers and overwhelm before Radiant stabilizes.',
+    supers:['sp_skyassault','sp_overgrowth','sp_galecut','sp_nova']},
+  {id:'orin',  side:'radiant', name:'Orin Daye', title:'The Steadfast Lantern', facs:['dawn','ember'], hue:H.dawn,
+    power:{name:'Renew', cost:2, text:'Heal your Hero 3.', placement:'self', kind:'healHero', amt:3},
+    difficulty:'Medium', playstyle:'Defensive value — soak early aggression, heal through the long game, and win on the grind.',
+    supers:['sp_aegisdawn','sp_phoenix','sp_grovewall','sp_nova']},
 ];
 const getHero=id=>HEROES.find(h=>h.id===id)||HEROES[0];
 
 /* ====================== DECK BUILDING ====================== */
 function deckForHero(heroId, rng){
-  const hero=getHero(heroId);
-  const facs=new Set([...hero.facs,'prism']);
+  const facs=factionsForHero(heroId);
   const pool=Object.values(CARDS).filter(c=>facs.has(c.fac));
   const copies={Common:4,Rare:4,Epic:3,Legendary:2};
   let list=[];
@@ -1230,6 +1306,22 @@ function makeUnit(cardId, side, lane){
   return u;
 }
 function hasKw(u,k){ return u && u.keywords && u.keywords.includes(k); }
+
+/* ---- SIDE-OWNED KEYWORDS (PvZ-Heroes-style faction identity) ----
+   Identity lives in the SIDE, like Plants vs Zombies. Umbral (the aggro side) owns
+   the aggressive keywords; Radiant (the value side) owns the reactive keywords.
+   Because card pools are side-locked, these keywords only ever appear on the owning
+   side's cards — so combat just reads hasKw and they always fire for their owner.
+   This table is the single source of truth the UI uses to label keywords by side. */
+const SIDE_KEYWORDS = {
+  umbral:  ['Frenzy', 'Deadly', 'Double Strike'],   // aggressive — push damage through
+  radiant: ['Strikethrough', 'Lifesteal', 'Rage', 'Last Breath']  // reactive value
+};
+function keywordSide(k){
+  if(SIDE_KEYWORDS.umbral.includes(k)) return 'umbral';
+  if(SIDE_KEYWORDS.radiant.includes(k)) return 'radiant';
+  return null;  // shared keyword (Armored, Stun, Freeze): both sides
+}
 
 function createMatch({seed, players, humanSide=0, vanguardSide}){
   const rng=makeRng(seed);
@@ -1327,16 +1419,25 @@ function dealUnitDamage(u, amt, opts={}, fx){
 function dealHeroDamage(side, amt, fx){
   if(amt<=0) return;
   const p=state.players[side];
+  // Block meter charges a RANDOM 1–3 segments per hit, regardless of how hard the hit is.
+  // When that charge fills the meter, the triggering hit is FULLY blocked (hero takes 0),
+  // a signature super is generated, and any overflow carries into the next meter.
+  const cap=p.blockCap;
+  const gain=1+rngInt(3);                          // random 1, 2, or 3 segments
+  const projected=(p.block||0)+gain;
+  if(p.hp>0 && projected>=cap){
+    p.block = projected - cap;                      // overflow carries over
+    fx&&fx.push({type:'blocked', side, amt});       // shield/impact event (animated by the view)
+    const sid=grantSuper(side,fx);
+    fx&&fx.push({type:'superpower', side, cardId:sid});
+    logLine(`${p.name} blocks the blow and channels power!`);
+    checkWin();
+    return;
+  }
+  // Meter not full: charge it and take the damage normally.
+  p.block=projected;
   p.hp=Math.max(0,p.hp-amt);
   fx&&fx.push({type:'heroDmg',side,amt});
-  // Block meter: 8 segments. Each hit charges it a random 1–3 segments.
-  const gain=1+rngInt(3);
-  p.block=(p.block||0)+gain;
-  if(p.hp>0 && p.block>=p.blockCap){
-    p.block-=p.blockCap;                         // carry the overflow
-    const sid=grantSuper(side,fx);
-    fx&&fx.push({type:'superpower',side,cardId:sid});
-  }
   checkWin();
 }
 function grantSuper(side, fx){
@@ -1377,6 +1478,7 @@ function applyEffect(side, eff, lane, fx, sourceUid){
         fx&&fx.push({type:'buff',uid:u.uid});
       }
       if(eff.heal) healHero(side,eff.heal,fx);
+      if(eff.draw) drawCard(side, eff.draw, fx);
       break; }
     case 'freezeAll':{ for(const u of allUnits()) if(u.side===opp){ u.frozen=true; fx&&fx.push({type:'freeze',uid:u.uid}); } break; }
     case 'summonAll':{ for(let i=0;i<5;i++) if(!allyUnit(side,i)){ const t=placeUnit(side,i,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
@@ -1385,7 +1487,7 @@ function applyEffect(side, eff, lane, fx, sourceUid){
       for(const u of allUnits()) if(u.side===side){ u.attack+=eff.atk||0; if(eff.hp){ u.health+=eff.hp; u.maxHealth+=eff.hp; } fx&&fx.push({type:'buff',uid:u.uid}); }
       break; }
     case 'destroyAll':{ for(const u of allUnits()) if(u.side===opp) dealUnitDamage(u,9999,{deadly:true,ignoreArmor:true},fx); break; }
-    case 'destroyStrongest':{ let best=null; for(const u of allUnits()) if(u.side===opp){ if(!best||(u.attack+u.health)>(best.attack+best.health)) best=u; } if(best) dealUnitDamage(best,9999,{deadly:true,ignoreArmor:true},fx); break; }
+    case 'destroyStrongest':{ let best=null; for(const u of allUnits()) if(u.side===opp){ if(!best||(u.attack+u.health)>(best.attack+best.health)) best=u; } if(best) dealUnitDamage(best,9999,{deadly:true,ignoreArmor:true},fx); if(eff.heroDamage) dealHeroDamage(opp, eff.heroDamage, fx); break; }
     case 'destroy':{ const u=enemyUnit(side,lane); if(u){ dealUnitDamage(u,9999,{deadly:true,ignoreArmor:true},fx); } break; }
     case 'silence':{ const u=enemyUnit(side,lane); if(u){ u.keywords=[]; u.armor=0; u.frozen=false; u.burn=0; fx&&fx.push({type:'silence',uid:u.uid}); } break; }
     case 'freezeLane':{ const u=enemyUnit(side,lane); if(u){ u.frozen=true; fx&&fx.push({type:'freeze',uid:u.uid}); } break; }
@@ -1393,13 +1495,20 @@ function applyEffect(side, eff, lane, fx, sourceUid){
     case 'aegis':{ const u=allyUnit(side,lane); if(u){ u.health+=3; u.maxHealth+=3; u.shield=true; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
     case 'updraft':{ const u=allyUnit(side,lane); if(u){ u.attack+=2; u.health+=1; u.maxHealth+=1; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
     case 'buffUnit':{ const u=allyUnit(side,lane); if(u){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
-    case 'rally':{ for(const u of allUnits()) if(u.side===side && u.uid!==sourceUid){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
-    case 'summonToken':{ if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
+    case 'siphon':{ dealHeroDamage(opp, eff.amt||1, fx); if(eff.draw) drawCard(side, eff.draw, fx); break; }
     case 'summonSpread':{
+      // Hero-power variant: placement 'self' spreads `count` tokens across empty lanes.
+      if(eff.placement==='self' || lane==null){
+        let n=eff.count||2;
+        for(let i=0;i<5 && n>0;i++){ if(!allyUnit(side,i)){ const t=placeUnit(side,i,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); n--; } }
+        break;
+      }
       if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); }
       const adj=[lane+1,lane-1].find(j=>j>=0&&j<5&&!allyUnit(side,j));
       if(adj!=null){ const t2=placeUnit(side,adj,eff.token); fx&&fx.push({type:'summon',uid:t2.uid}); }
       break; }
+    case 'rally':{ for(const u of allUnits()) if(u.side===side && u.uid!==sourceUid){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
+    case 'summonToken':{ if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
   }
   reapDead(fx);
   checkWin();
@@ -1462,17 +1571,25 @@ function resolveLaneStrikes(laneIndex){
 }
 
 // returns {ok, fx, summonedUid} — mutates state
+// A generated superpower costs 1 energy to play (it is not free). All other cards use
+// their printed cost. Centralized so cost-check and energy-spend always agree.
+function effectiveCost(card, inst){
+  if((inst && inst.super) || card.super) return 1;
+  return card.cost;
+}
+
 function playCard(side, iid, lane){
   const p=state.players[side];
   const idx=p.hand.findIndex(h=>h.iid===iid);
   if(idx<0) return {ok:false,error:'Card not in hand.'};
   const inst=p.hand[idx]; const card=getCard(inst.cardId);
-  if(card.cost>p.energy) return {ok:false,error:'Not enough energy.'};
+  const cost=effectiveCost(card, inst);
+  if(cost>p.energy) return {ok:false,error:'Not enough energy.'};
   const fx=[];
 
   if(card.type==='unit'){
     if(lane==null || allyUnit(side,lane)) return {ok:false,error:'Choose an empty lane.'};
-    p.energy-=card.cost; p.hand.splice(idx,1);
+    p.energy-=cost; p.hand.splice(idx,1);
     const u=placeUnit(side,lane,card.id);
     fx.push({type:'energy',side});
     if(card.eff) applyEffect(side, card.eff, lane, fx, u.uid);
@@ -1486,7 +1603,7 @@ function playCard(side, iid, lane){
       const valid=targetLanes(side, spec);
       if(!valid.includes(lane)) return {ok:false,error:'Invalid target.'};
     }
-    p.energy-=card.cost; p.hand.splice(idx,1); p.discard.push(inst.cardId);
+    p.energy-=cost; p.hand.splice(idx,1); p.discard.push(inst.cardId);
     fx.push({type:'cast',side,lane,card:card.id});
     if(spec) applyEffect(side, spec, lane, fx);
     logLine(`${p.name} cast ${card.name}.`);
@@ -1654,10 +1771,10 @@ async function aiTurn(side, allow){
   const p=state.players[side], opp=1-side, hero=getHero(p.heroId);
   let guard=0;
   while(guard++<14){
-    const plays=p.hand.map(h=>({h,c:getCard(h.cardId)})).filter(x=>x.c.cost<=p.energy);
+    const plays=p.hand.map(h=>({h,c:getCard(h.cardId)})).filter(x=>effectiveCost(x.c,x.h)<=p.energy);
     let acted=false;
 
-    // 0) Superpower — free and strong, always fire it
+    // 0) Superpower — costs 1 energy now, but strong; fire it when affordable
     const sup=plays.find(x=>x.c.super);
     if(sup){
       const lane=(sup.c.eff&&sup.c.eff.placement==='lane')?targetLanes(side,sup.c.eff)[0]:null;
@@ -1917,9 +2034,13 @@ function facDot(f){ return `<span class="dot" style="background:${hsl(FAC_DOT[f]
 function statEl(kind, val){
   return `<div class="stat ${kind}">${kind==='atk'?ICON.atkbg:ICON.hpbg}<span>${val}</span></div>`;
 }
-function kwPips(list, big){
+function kwPips(list, big, side){
   if(!list||!list.length) return '';
-  return list.map(k=>`<span class="kwpip" title="${k}: ${KW_TEXT[k]||''}">${kwIcon(k)}</span>`).join('');
+  return list.map(k=>{
+    const ks = (typeof keywordSide==='function') ? keywordSide(k) : null;
+    const tag = ks ? ` (${ks==='umbral'?'Umbral':'Radiant'} keyword)` : '';
+    return `<span class="kwpip${ks?' kw-'+ks:''}" title="${k}${tag}: ${KW_TEXT[k]||''}">${kwIcon(k)}</span>`;
+  }).join('');
 }
 
 /* ---- screens ---- */
@@ -1933,7 +2054,6 @@ function setScreen(name){
 
 /* ---- MENU ---- */
 let selectedHeroId = HEROES[0].id;
-let playAs = 'vanguard';            // 'vanguard' (commit first) or 'responder' (react)
 let selectedDeckId = 'auto';        // 'auto' or a saved deck id
 let onlineMode = false;             // true while in a Play-a-Friend (networked) flow
 // Saved custom decks (session memory): { id, name, heroId, cards:[] }
@@ -1992,12 +2112,14 @@ function decksForHero(heroId){
 function heroSetupCard(h){
   const sel = h.id===selectedHeroId;
   const facs = h.facs.map(f=>`<span class="fac-chip" style="--fc:${H[f]}">${facName(f)}</span>`).join('')+`<span class="fac-chip" style="--fc:${H.prism}">Prism</span>`;
+  const sd = SIDES[sideOfHero(h.id)];
   return `
-    <button class="herocard ${sel?'sel':''}" data-hero="${h.id}" style="--hue:${h.hue}">
+    <button class="herocard ${sel?'sel':''} side-${sideOfHero(h.id)}" data-hero="${h.id}" style="--hue:${h.hue}">
       <div class="hc-portrait">${creature('hero',h.hue)}</div>
       <div class="hc-body">
         <div class="hc-namerow"><span class="hc-name">${h.name}</span><span class="diff ${DIFF_CLASS[h.difficulty]}">${h.difficulty}</span></div>
         <div class="hc-title">${h.title}</div>
+        <div class="hc-side" style="--sc:${sd.hue}">${sd.name}</div>
         <div class="hc-facs">${facs}</div>
       </div>
     </button>`;
@@ -2006,7 +2128,16 @@ function renderSetup(){
   const h=getHero(selectedHeroId);
   const decks=decksForHero(selectedHeroId);
   if(!decks.find(d=>d.id===selectedDeckId)) selectedDeckId='auto';
-  const heroCards=HEROES.map(heroSetupCard).join('');
+  const sideGroup=(sideId)=>{
+    const sd=SIDES[sideId];
+    const cards=HEROES.filter(x=>sideOfHero(x.id)===sideId).map(heroSetupCard).join('');
+    if(!cards) return '';
+    return `<div class="side-group side-${sideId}">
+      <div class="side-header" style="--sc:${sd.hue}"><span class="side-dot"></span>${sd.name}<small>${sd.blurb}</small></div>
+      <div class="herocard-list">${cards}</div>
+    </div>`;
+  };
+  const heroCards=sideGroup('radiant')+sideGroup('umbral');
   const facs = h.facs.map(f=>`<span class="fac-chip" style="--fc:${H[f]}">${facName(f)}</span>`).join('')+`<span class="fac-chip" style="--fc:${H.prism}">Prism</span>`;
   const deckCards=decks.map(d=>{
     const cnt = d.auto ? 40 : d.cards.length;
@@ -2028,7 +2159,7 @@ function renderSetup(){
       <div class="setup-cols">
         <div class="setup-left">
           <div class="sec-label">CHOOSE YOUR DUELIST</div>
-          <div class="herocard-list">${heroCards}</div>
+          <div class="hero-roster">${heroCards}</div>
         </div>
         <div class="setup-right">
           <div class="hero-detail" style="--hue:${h.hue}">
@@ -2043,11 +2174,9 @@ function renderSetup(){
             <div class="hd-row"><span class="hd-k">Difficulty</span><span class="diff ${DIFF_CLASS[h.difficulty]}">${h.difficulty}</span></div>
             <div class="hd-play"><span class="hd-k">Playstyle</span><p>${h.playstyle}</p></div>
           </div>
-          <div class="sec-label" ${onlineMode?'hidden':''}>ROLE</div>
-          <div class="role-row" ${onlineMode?'hidden':''}>
-            <button class="role-pick ${playAs==='vanguard'?'sel':''}" data-role="vanguard"><strong>Vanguard</strong><small>Commit first · strike first</small></button>
-            <button class="role-pick ${playAs==='responder'?'sel':''}" data-role="responder"><strong>Responder</strong><small>React · last word</small></button>
-          </div>
+          <div class="seat-note">${sideOfHero(h.id)==='umbral'
+            ? '<b>Umbral · Vanguard</b> — you commit fighters first and strike first, then fire tricks before the clash.'
+            : '<b>Radiant · Responder</b> — you react after Umbral commits, playing units and tricks, and get the last word.'}</div>
           <div class="sec-label">DECK</div>
           <div class="deckcard-list">${deckCards}</div>
           <div class="setup-actions">
@@ -2061,15 +2190,9 @@ function renderSetup(){
     </div>`;
 
   dom.setup.querySelector('#setup-back').onclick=()=>{ audio.sfx('ui'); setScreen('menu'); };
-  dom.setup.querySelector('.herocard-list').addEventListener('click', e=>{
+  dom.setup.querySelector('.hero-roster').addEventListener('click', e=>{
     const b=e.target.closest('.herocard'); if(!b) return;
     selectedHeroId=b.dataset.hero; selectedDeckId='auto'; audio.sfx('select'); renderSetup();
-  });
-  const roleRow=dom.setup.querySelector('.role-row');
-  if(roleRow) roleRow.addEventListener('click', e=>{
-    const b=e.target.closest('.role-pick'); if(!b) return;
-    playAs=b.dataset.role; audio.sfx('select');
-    [...dom.setup.querySelectorAll('.role-pick')].forEach(x=>x.classList.toggle('sel',x===b));
   });
   dom.setup.querySelector('.deckcard-list').addEventListener('click', e=>{
     const b=e.target.closest('.deckcard'); if(!b) return;
@@ -2099,7 +2222,7 @@ let builder={hero:null, counts:{}};
 const DECK_SIZE=40;
 function copyLimit(c){ return 4; }   // up to 4 copies of any individual card
 function poolForHero(heroId){
-  const hero=getHero(heroId), facs=new Set([...hero.facs,'prism']);
+  const facs=factionsForHero(heroId);
   return Object.values(CARDS)
     .filter(c=>c.fac!=='super' && facs.has(c.fac))
     .sort((a,b)=> (a.cost-b.cost) || a.name.localeCompare(b.name));
@@ -2271,7 +2394,7 @@ function renderDeckbuilder(){
   });
 }
 function confirmHeroSwitchOk(heroId){
-  const facs=new Set([...getHero(heroId).facs,'prism']);
+  const facs=factionsForHero(heroId);
   for(const id in builder.counts){ if(!facs.has(getCard(id).fac)) return false; }
   return true;
 }
@@ -2306,10 +2429,11 @@ function autofillDeck(){
 /* ---- MATCH SHELL ---- */
 function heroPlate(side){
   const p=state.players[side], hero=getHero(p.heroId);
+  const sd=SIDES[sideOfHero(p.heroId)];
   return `
-    <div class="heroplate" style="--hue:${hero.hue}">
+    <div class="heroplate side-${sideOfHero(p.heroId)}" style="--hue:${hero.hue}">
       <div class="portrait" id="port-${side}">${creature('hero',hero.hue)}</div>
-      <div class="meta"><b>${p.name}</b><small>${hero.title}</small></div>
+      <div class="meta"><b>${p.name}</b><small><span class="side-tag" style="--sc:${sd.hue}">${sd.name}</span> · ${hero.title}</small></div>
       <div class="hpcrystal" id="hp-${side}">${ICON.crystal}<span class="val">${p.hp}</span></div>
       <div class="blockbar" id="bb-${side}">${[0,1,2,3,4,5,6,7].map(()=>'<i class="seg"></i>').join('')}</div>
     </div>`;
@@ -2332,18 +2456,25 @@ function buildMatchDOM(){
       <div class="hud top">
         ${heroPlate(opp)}
         <div class="roundtag"><div class="r">ROUND 1</div><div class="who">THE RIFT OPENS</div></div>
-        <div class="deckpile" id="deck-${opp}"><span class="stack"></span><span class="num">0</span></div>
+        <div class="counts" id="counts-${opp}">
+          <div class="ct hand"><span class="ci">✋</span><span class="num" id="hand-${opp}">0</span></div>
+          <div class="deckpile" id="deck-${opp}"><span class="stack"></span><span class="num">0</span></div>
+        </div>
       </div>
       <div class="boardwrap"><div class="board">${[0,1,2,3,4].map(laneEl).join('')}</div></div>
       <div class="log" id="log"></div>
       <div class="thinking" id="thinking"><span class="d"></span><span class="d"></span><span class="d"></span> Rival is plotting…</div>
       <div class="hud bottom">
         ${heroPlate(human)}
-        <div class="energy"><span class="lbl" id="enlbl">0/0</span><div class="pips" id="pips"></div></div>
-        <div class="deckpile" id="deck-${human}"><span class="stack"></span><span class="num">0</span></div>
+        <div class="energy"><span class="lbl" id="enlbl">0/0</span><div class="pips" id="pips"></div><span class="energy-name">energy</span></div>
+        <div class="counts" id="counts-${human}">
+          <div class="ct hand"><span class="ci">✋</span><span class="num" id="hand-${human}">0</span></div>
+          <div class="deckpile" id="deck-${human}"><span class="stack"></span><span class="num">0</span></div>
+        </div>
         <div class="controls">
           <button class="btn power" id="powerbtn"><span class="pc"></span>Power</button>
           <button class="btn end glow" id="endbtn">End Turn</button>
+          <button class="iconbtn" id="concedebtn" title="Concede match">⚑</button>
           <button class="iconbtn" id="mutebtn" title="Mute">${ICON.crystal}</button>
         </div>
       </div>
@@ -2358,6 +2489,7 @@ function buildMatchDOM(){
   dom.enlbl   = dom.match.querySelector('#enlbl');
   dom.powerbtn= dom.match.querySelector('#powerbtn');
   dom.endbtn  = dom.match.querySelector('#endbtn');
+  dom.concedebtn = dom.match.querySelector('#concedebtn');
   dom.mutebtn = dom.match.querySelector('#mutebtn');
   dom.hpEl    = [dom.match.querySelector('#hp-0'), dom.match.querySelector('#hp-1')];
   dom.portrait= [dom.match.querySelector('#port-0'), dom.match.querySelector('#port-1')];
@@ -2366,6 +2498,7 @@ function buildMatchDOM(){
   dom.fxdom   = document.getElementById('fxdom');
   dom.flash   = document.getElementById('flash');
   dom.deckEl  = [dom.match.querySelector('#deck-0 .num'), dom.match.querySelector('#deck-1 .num')];
+  dom.handEl  = [dom.match.querySelector('#hand-0'), dom.match.querySelector('#hand-1')];
   dom.roundtag= dom.match.querySelector('.roundtag');
 
   const pw=getHero(state.players[human].heroId).power;
@@ -2384,7 +2517,7 @@ function buildUnitEl(u){
   e.innerHTML=`
     <div class="art">${creature(u.shape,u.hue)}</div>
     <div class="uname">${u.name}</div>
-    <div class="kw">${kwPips(u.keywords)}</div>
+    <div class="kw">${kwPips(u.keywords,false,u.side)}</div>
     ${statEl('atk',u.attack)}${statEl('hp',u.health)}
     <div class="badge"></div>
     <div class="frost"></div>
@@ -2407,7 +2540,7 @@ function decorateUnit(e,u){
   atk.classList.toggle('buffed', u.attack>(card.atk||0));
   hp.classList.toggle('hurt', u.health<u.maxHealth);
   hp.classList.toggle('buffed', u.maxHealth>(card.hp||0) && u.health>=u.maxHealth);
-  e.querySelector('.kw').innerHTML=kwPips(u.keywords);
+  e.querySelector('.kw').innerHTML=kwPips(u.keywords,false,u.side);
   e.classList.toggle('shielded', !!u.shield);
   e.querySelector('.frost').style.display = u.frozen?'block':'none';
 }
@@ -2449,6 +2582,7 @@ function buildCardEl(inst){
   const c=getCard(inst.cardId);
   const rar = c.rar==='Rare'?'rarity-rare':c.rar==='Epic'?'rarity-epic':c.rar==='Legendary'?'rarity-legendary':'';
   const sup = inst.super || c.super;
+  const dispCost = sup ? 1 : c.cost;
   const e=el('div','card '+rar+(sup?' super':'')); e.dataset.iid=inst.iid; e.style.setProperty('--hue',H[c.fac]);
   const statBlock = c.type==='unit'
     ? `${statEl('atk',c.atk||0)}${statEl('hp',c.hp||0)}`
@@ -2458,11 +2592,11 @@ function buildCardEl(inst){
       <div class="art">${creature(c.shape,H[c.fac])}</div>
       <div class="namebar">${c.name}</div>
       <div class="ctext">${c.text||''}</div>
-      <div class="kwrow">${kwPips(c.kw)}</div>
+      <div class="kwrow">${kwPips(c.kw,false,state.humanSide)}</div>
       ${statBlock}
     </div>
     <div class="frame-rare"></div>
-    <div class="cost">${ICON.cost}<span>${c.cost}</span></div>`;
+    <div class="cost">${ICON.cost}<span>${dispCost}</span></div>`;
   return e;
 }
 function renderHand(){
@@ -2471,7 +2605,7 @@ function renderHand(){
   for(const inst of p.hand){
     const e=buildCardEl(inst);
     const c=getCard(inst.cardId);
-    const affordable=c.cost<=p.energy;
+    const affordable=(inst.super||c.super?1:c.cost)<=p.energy;
     const targets=validLanesFor(c, human);
     const needsTarget=cardNeedsTarget(c);
     const allowed=allowedInPhase(inst, c);
@@ -2495,7 +2629,9 @@ function updateHud(){
   for(const side of [0,1]){
     const p=state.players[side];
     const val=dom.hpEl[side].querySelector('.val'); val.textContent=p.hp;
-    dom.deckEl[side].textContent=p.deck.length;
+    // deck may be a number (online fog snapshot) or an array (local) — handle both
+    dom.deckEl[side].textContent = (typeof p.deck==='number') ? p.deck : p.deck.length;
+    if(dom.handEl && dom.handEl[side]) dom.handEl[side].textContent = p.hand ? p.hand.length : 0;
     if(dom.blockseg && dom.blockseg[side]){
       const segs=dom.blockseg[side];
       const prev=dom.blockPrev?dom.blockPrev[side]:0;
@@ -2590,6 +2726,23 @@ function calloutAt(x,y,text,kind){
 function flinch(side){ const p=dom.portrait[side]; if(!p) return; p.classList.remove('flinch'); void p.offsetWidth; p.classList.add('flinch'); }
 function grin(side){ const p=dom.portrait[side]; if(!p) return; p.classList.remove('grin'); void p.offsetWidth; p.classList.add('grin'); }
 function goldFlash(){ if(!dom.flash||reduceMotion) return; dom.flash.classList.remove('on'); void dom.flash.offsetWidth; dom.flash.classList.add('on'); }
+function blockFx(side, amt){
+  const cz=crystalCenter(side);
+  // shield slams up and absorbs the blow — the hero takes ZERO damage
+  dom.hpEl[side].classList.remove('blocking'); void dom.hpEl[side].offsetWidth; dom.hpEl[side].classList.add('blocking');
+  setTimeout(()=>dom.hpEl[side].classList.remove('blocking'), 620);
+  calloutAt(cz.x, cz.y-6, 'BLOCKED!', 'big');
+  // layered shield rings + spark burst
+  fx.ring(cz.x,cz.y,'#7fd4ff',54);
+  setTimeout(()=>fx.ring(cz.x,cz.y,'#bfe9ff',78), 70);
+  setTimeout(()=>fx.ring(cz.x,cz.y,'#e8f7ff',104), 150);
+  fx.burst(cz.x,cz.y,'#bfe9ff',20,3.4);
+  fx.floatNum(cz.x, cz.y-12, '0', 'd-block');
+  fx.shake(11);
+  audio.sfx('freeze');           // crisp shield-impact tone
+  setTimeout(()=>audio.sfx('power'), 130);
+  banner('BLOCKED!');
+}
 function superPowerFx(side, cardId){
   const cz=crystalCenter(side);
   goldFlash();
@@ -2628,6 +2781,7 @@ async function playFx(list, opts={}){
       case 'cast': { audio.sfx('card'); const lane=dom.board.querySelector(`.lane[data-lane="${f.lane}"]`); if(lane){ const cz=fx.center(lane); fx.ring(cz.x,cz.y,'#9fd8ff',46); } break; }
       case 'unitDmg': if(f.amt>0){ hitUnitFx(f.uid,f.amt); audio.sfx('hit'); } else { const e=unitElByUid(f.uid); if(e) decorateUnitByUid(f.uid); } break;
       case 'heroDmg': if(f.amt>0) hitHero(f.side,f.amt); break;
+      case 'blocked': blockFx(f.side, f.amt); await delay(opts.fast?120:340); break;
       case 'superpower': superPowerFx(f.side, f.cardId); break;
       case 'kill': grin(f.side); break;
       case 'death': { const e=unitElByUid(f.uid); if(e){ const cz=fx.center(e); fx.burst(cz.x,cz.y,'#ff8a6b',16,3.2); fx.ring(cz.x,cz.y,'rgba(255,120,90,.6)',40); } break; }
@@ -2665,6 +2819,13 @@ function wireMatchInput(){
   });
   dom.powerbtn.addEventListener('click', ()=>{ if(!humanActive) return; onPower(); });
   dom.endbtn.addEventListener('click', ()=>{ if(!humanActive) return; audio.sfx('ui'); if(onlineMode && online && online.session){ humanActive=false; updateHud(); clearSelection(); online.session.endPhase(); } else { resolvePhase(); } });
+  dom.concedebtn.addEventListener('click', ()=>{
+    audio.sfx('ui');
+    showConfirm('Concede this match?', 'Your crystal shatters and your opponent wins. This cannot be undone.', ()=>{
+      if(onlineMode && online && online.session){ online.session.concede(); }
+      else if(session){ session.dispatch({type:'concede', side:state.humanSide}); humanActive=false; finish(); }
+    });
+  });
   dom.mutebtn.addEventListener('click', ()=>{ const m=audio.toggle(); dom.mutebtn.style.opacity=m?0.4:1; toast(m?'Muted':'Sound on'); });
   // dismiss tooltip when tapping anywhere that isn't a hand card
   document.addEventListener('pointerdown', e=>{ if(!e.target.closest('#hand .card') && dom.cardtip && !dom.cardtip.hidden) hideTip(); }, true);
@@ -2920,14 +3081,17 @@ const controller = {
   },
   async startMatch(){
     const human=0;
-    const rivals=HEROES.filter(h=>h.id!==selectedHeroId);
+    // Matches are always Umbral vs Radiant. The AI takes the OPPOSITE side from the player.
+    const mySide=sideOfHero(selectedHeroId);
+    const oppSide = mySide==='umbral' ? 'radiant' : 'umbral';
+    const rivals=HEROES.filter(h=>sideOfHero(h.id)===oppSide);
     const rival=rivals[Math.floor(Math.random()*rivals.length)];
-    // The game talks only to the Session interface. LocalAISession today; swapping in
-    // FutureOnlineSession later requires no changes to the view or engine layers.
+    // Umbral is the Vanguard (commits first, strikes first); Radiant is the Responder.
+    const umbralIsHuman = mySide==='umbral';
     session = LocalAISession({
       seed:'rift-'+Date.now()+'-'+Math.floor(Math.random()*9999),
       humanSide:human,
-      vanguardSide: playAs==='vanguard' ? human : (1-human),
+      vanguardSide: umbralIsHuman ? human : (1-human),
       players:[
         {heroId:selectedHeroId, name:'You', deck:(customDeck&&customDeck.length)?customDeck.slice():null},
         {heroId:rival.id, name:rival.name.split(' ')[0]+' (AI)', bot:true}
@@ -3063,6 +3227,24 @@ function finish(){
   if(win){ fx.confetti(); audio.sfx('win'); } else { audio.sfx('lose'); }
 }
 
+/* ---- reusable confirm modal ---- */
+function showConfirm(title, body, onYes){
+  const ov=el('div','modal-overlay');
+  ov.innerHTML=`<div class="modal-card">
+    <div class="modal-title">${title}</div>
+    <p>${body}</p>
+    <div class="ra" style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn ghost" id="cf-no">Cancel</button>
+      <button class="btn end" id="cf-yes">Confirm</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov); requestAnimationFrame(()=>ov.classList.add('on'));
+  const close=()=>{ ov.classList.remove('on'); setTimeout(()=>ov.remove(),250); };
+  ov.querySelector('#cf-no').onclick=close;
+  ov.querySelector('#cf-yes').onclick=()=>{ close(); onYes&&onYes(); };
+  ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+}
+
 /* ====================== BOOT ====================== */
 function boot(){
   dom.menu  = document.getElementById('screen-menu');
@@ -3080,6 +3262,13 @@ function boot(){
   // unlock audio on first interaction
   const unlock=()=>{ audio.start(); window.removeEventListener('pointerdown',unlock); };
   window.addEventListener('pointerdown',unlock);
+  // Escape backs out of setup / lobby (not during a match or while typing a room code)
+  window.addEventListener('keydown', e=>{
+    if(e.key!=='Escape') return;
+    if(document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    if(dom.setup.classList.contains('on')){ audio.sfx('ui'); setScreen('menu'); }
+    else if(dom.lobby && dom.lobby.classList.contains('on')){ const b=dom.lobby.querySelector('#lobby-back'); if(b) b.click(); }
+  });
 }
 boot();
 /* (IIFE continues into script_d.js, which closes it) */
