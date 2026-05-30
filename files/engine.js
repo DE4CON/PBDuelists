@@ -13,10 +13,25 @@ function hashSeed(str){ let h=2166136261>>>0; str=String(str); for(let i=0;i<str
 function makeRng(seed){ let s=hashSeed(seed); return ()=>{ s|=0; s=(s+0x6D2B79F5)|0; let t=Math.imul(s^(s>>>15),1|s); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
 function shuffle(arr,rng){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
+/* ====================== ART (inline SVG) ====================== */
+
 /* ---- faction hue map (from script_a.js) ---- */
 const H = {
   ember:14, dawn:44, flux:128, null:268, sky:202, prism:320
 };
+
+/* ---- SIDES system (from script_a.js) ---- */
+const SIDES = {
+  radiant: { name:'Radiant', factions:['ember','dawn','flux'], hue:H.dawn,
+             blurb:'Light, growth, and renewal — out-value the board and grind the long game.' },
+  umbral:  { name:'Umbral',  factions:['null','sky'],          hue:H.null,
+             blurb:'Void and storm — strike fast, go wide, and crack the crystal before they stabilize.' }
+};
+const FACTION_SIDE = (()=>{ const m={}; for(const s in SIDES) for(const f of SIDES[s].factions) m[f]=s; return m; })();
+function sideOfFaction(f){ return FACTION_SIDE[f]||null; }
+function sideOfHero(heroId){ const h=getHero(heroId); return h.side || sideOfFaction((h.facs||[])[0]) || 'radiant'; }
+// The buildable faction set for a hero = its SIDE's factions + neutral Prism.
+function factionsForHero(heroId){ const s=sideOfHero(heroId); return new Set([...(SIDES[s]?SIDES[s].factions:[]), 'prism']); }
 
 /* ---- card data, heroes, deck builder (from script_a.js) ---- */
 const RARITY=['Common','Rare','Epic','Legendary'];
@@ -30,11 +45,11 @@ C({id:'p_sentinel',name:'Rift Sentinel',fac:'prism',cost:4,type:'unit',rar:'Rare
 C({id:'p_weaver',name:'Lightweaver',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:2,hp:3,shape:'star',text:'Battlecry: Heal your Hero 3.',eff:{kind:'healHero',amt:3,placement:'global'}});
 C({id:'p_surge',name:'Energy Surge',fac:'prism',cost:0,type:'spell',rar:'Common',shape:'star',text:'Gain +1 energy this turn.',eff:{kind:'gainEnergy',amt:1,placement:'global'}});
 C({id:'p_insight',name:'Insight',fac:'prism',cost:2,type:'spell',rar:'Common',shape:'star',text:'Draw 2 cards.',eff:{kind:'draw',amt:2,placement:'global'}});
-C({id:'p_colossus',name:'Prism Colossus',fac:'prism',cost:6,type:'unit',rar:'Legendary',atk:6,hp:6,kw:['Frenzy'],shape:'bulky',text:'Frenzy.'});
+C({id:'p_colossus',name:'Prism Colossus',fac:'prism',cost:6,type:'unit',rar:'Legendary',atk:6,hp:6,kw:['Armored'],shape:'bulky',text:'Frenzy.'});
 
 // --- Emberwake (aggro / burn) ---
 C({id:'e_imp',name:'Cinder Imp',fac:'ember',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'imp',text:'Eager to burn.'});
-C({id:'e_hounds',name:'Ember Hounds',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Frenzy'],shape:'imp',text:'Frenzy.'});
+C({id:'e_hounds',name:'Ember Hounds',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Rage'],shape:'imp',text:'Frenzy.'});
 C({id:'e_brute',name:'Magma Brute',fac:'ember',cost:4,type:'unit',rar:'Rare',atk:5,hp:4,shape:'bulky',text:'Smolders with fury.'});
 C({id:'e_meteor',name:'Meteor Note',fac:'ember',cost:2,type:'spell',rar:'Common',shape:'star',text:'Deal 2 to a lane and apply Burn 1.',eff:{kind:'laneDamage',amt:2,burn:1,placement:'lane'}});
 C({id:'e_wildfire',name:'Wildfire',fac:'ember',cost:3,type:'spell',rar:'Epic',shape:'star',text:'Deal 1 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:1,placement:'global'}});
@@ -52,7 +67,7 @@ C({id:'d_decree',name:'Radiant Decree',fac:'dawn',cost:4,type:'spell',rar:'Epic'
 
 // --- Fluxwild (swarm / ramp / tokens) ---
 C({id:'f_sapling',name:'Sapling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:1,shape:'leaf',text:'A tiny sprout.'});
-C({id:'f_thorn',name:'Thornling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:2,kw:['Deadly'],shape:'leaf',text:'Deadly.'});
+C({id:'f_thorn',name:'Thornling',fac:'flux',cost:1,type:'unit',rar:'Common',atk:1,hp:2,kw:['Strikethrough'],shape:'leaf',text:'Deadly.'});
 C({id:'f_pack',name:'Bramble Pack',fac:'flux',cost:3,type:'spell',rar:'Rare',shape:'leaf',text:'Summon two 1/1 Saplings to a lane and an adjacent lane.',eff:{kind:'summonSpread',token:'f_sapling',placement:'lane',ally:true}});
 C({id:'f_tender',name:'Grove Tender',fac:'flux',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,shape:'leaf',text:'Battlecry: Your units gain +1/+1.',eff:{kind:'rally',atk:1,hp:1,placement:'global'}});
 C({id:'f_growth',name:'Wildgrowth',fac:'flux',cost:2,type:'spell',rar:'Common',shape:'leaf',text:'Permanently gain +1 max energy.',eff:{kind:'gainMaxEnergy',amt:1,placement:'global'}});
@@ -87,7 +102,7 @@ C({id:'p_shatter',name:'Shatterlight',fac:'prism',cost:3,type:'spell',rar:'Rare'
 // Ember (aggro / burn)
 C({id:'e_raider',name:'Ash Raider',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,shape:'imp',text:'Eager for embers.'});
 C({id:'e_cinderspit',name:'Cinderspit',fac:'ember',cost:1,type:'spell',rar:'Common',shape:'star',text:'Deal 1 to a lane and apply Burn 1.',eff:{kind:'laneDamage',amt:1,burn:1,placement:'lane'}});
-C({id:'e_flamevow',name:'Flamevow Zealot',fac:'ember',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
+C({id:'e_flamevow',name:'Flamevow Zealot',fac:'ember',cost:3,type:'unit',rar:'Epic',atk:2,hp:3,kw:['Lifesteal'],shape:'winged',text:'Double Strike.'});
 C({id:'e_emberlord',name:'Emberlord',fac:'ember',cost:5,type:'unit',rar:'Rare',atk:5,hp:4,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 C({id:'e_eruption',name:'Eruption',fac:'ember',cost:4,type:'spell',rar:'Epic',shape:'star',text:'Deal 2 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:2,placement:'global'}});
 // Dawn (armor / defense / buff)
@@ -128,7 +143,7 @@ C({id:'f_thornking',name:'Thorn King',fac:'flux',cost:6,type:'unit',rar:'Legenda
 C({id:'n_assassin',name:'Null Assassin',fac:'null',cost:3,type:'unit',rar:'Epic',atk:2,hp:2,kw:['Deadly'],shape:'serpent',text:'Deadly.'});
 C({id:'n_reaper',name:'Void Reaper',fac:'null',cost:5,type:'unit',rar:'Epic',atk:3,hp:4,kw:['Deadly'],shape:'cloak',text:'Deadly.'});
 C({id:'n_jolt',name:'Stasis Jolt',fac:'null',cost:2,type:'spell',rar:'Rare',shape:'cloak',text:'Stun an enemy unit (skips its next attack).',eff:{kind:'stun',placement:'lane',unitOnly:true}});
-C({id:'s_raptor',name:'Gale Raptor',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'s_raptor',name:'Gale Raptor',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Double Strike'],shape:'winged',text:'Strikethrough.'});
 C({id:'s_skydiver',name:'Sky Diver',fac:'sky',cost:3,type:'unit',rar:'Epic',atk:3,hp:3,shape:'winged',text:'A daring raider.'});
 C({id:'s_squall',name:'Squall',fac:'sky',cost:3,type:'spell',rar:'Rare',shape:'star',text:'Deal 3 to an enemy unit.',eff:{kind:'laneDamage',amt:3,placement:'lane',unitOnly:true}});
 C({id:'p_warden',name:'Prism Warden',fac:'prism',cost:4,type:'unit',rar:'Epic',atk:4,hp:5,shape:'block',text:'A radiant bruiser.'});
@@ -137,12 +152,12 @@ C({id:'p_warden',name:'Prism Warden',fac:'prism',cost:4,type:'unit',rar:'Epic',a
 // Prism (neutral)
 C({id:'p2_runner',name:'Rift Runner',fac:'prism',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'star',text:'Fast and fragile.'});
 C({id:'p2_warden',name:'Prism Bulwark',fac:'prism',cost:3,type:'unit',rar:'Common',atk:2,hp:5,shape:'block',text:'A steadfast wall.'});
-C({id:'p2_blade',name:'Shardblade Adept',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:3,hp:3,kw:['Deadly'],shape:'helm',text:'Deadly.'});
+C({id:'p2_blade',name:'Shardblade Adept',fac:'prism',cost:3,type:'unit',rar:'Rare',atk:3,hp:3,kw:['Armored'],shape:'helm',text:'Deadly.'});
 C({id:'p2_seer',name:'Rift Seer',fac:'prism',cost:4,type:'unit',rar:'Epic',atk:3,hp:4,shape:'hero',text:'Battlecry: Draw a card.',eff:{kind:'draw',amt:1,placement:'global'}});
 C({id:'p2_focus',name:'Refraction',fac:'prism',cost:2,type:'spell',rar:'Common',shape:'star',text:'Draw 2 cards.',eff:{kind:'draw',amt:2,placement:'global'}});
 // Ember (aggro / burn)
 C({id:'e2_imp',name:'Spark Imp',fac:'ember',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'imp',text:'Itching for a fight.'});
-C({id:'e2_zealot',name:'Ash Zealot',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Frenzy'],shape:'imp',text:'Frenzy.'});
+C({id:'e2_zealot',name:'Ash Zealot',fac:'ember',cost:2,type:'unit',rar:'Common',atk:3,hp:2,kw:['Lifesteal'],shape:'imp',text:'Frenzy.'});
 C({id:'e2_marauder',name:'Cinder Marauder',fac:'ember',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 C({id:'e2_vortex',name:'Flame Vortex',fac:'ember',cost:3,type:'spell',rar:'Rare',shape:'star',text:'Deal 1 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:1,placement:'global'}});
 C({id:'e2_bolt',name:'Ember Bolt',fac:'ember',cost:1,type:'spell',rar:'Common',shape:'star',text:'Deal 2 to a lane (unit or Hero).',eff:{kind:'laneDamage',amt:2,placement:'lane'}});
@@ -167,7 +182,7 @@ C({id:'n2_chill',name:'Hoarfrost',fac:'null',cost:3,type:'spell',rar:'Rare',shap
 // Sky (tempo / strikethrough)
 C({id:'s2_scout',name:'Wind Darter',fac:'sky',cost:1,type:'unit',rar:'Common',atk:2,hp:1,shape:'winged',text:'Darts in fast.'});
 C({id:'s2_skirmisher',name:'Gust Skirmisher',fac:'sky',cost:2,type:'unit',rar:'Common',atk:3,hp:2,shape:'winged',text:'Hit-and-run.'});
-C({id:'s2_striker',name:'Tempest Striker',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'s2_striker',name:'Tempest Striker',fac:'sky',cost:4,type:'unit',rar:'Rare',atk:4,hp:3,kw:['Frenzy'],shape:'winged',text:'Strikethrough.'});
 C({id:'s2_double',name:'Twin Cyclone',fac:'sky',cost:5,type:'unit',rar:'Epic',atk:3,hp:4,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
 C({id:'s2_surge',name:'Tailwind',fac:'sky',cost:1,type:'spell',rar:'Common',shape:'star',text:'Give a friendly unit +2/+1.',eff:{kind:'updraft',placement:'lane',ally:true}});
 
@@ -176,7 +191,7 @@ C({id:'s2_surge',name:'Tailwind',fac:'sky',cost:1,type:'spell',rar:'Common',shap
 C({id:'hi_p_avatar',name:'Prism Avatar',fac:'prism',cost:7,type:'unit',rar:'Legendary',atk:7,hp:7,shape:'bulky',text:'A towering construct of pure light.'});
 C({id:'hi_p_arbiter',name:'Rift Arbiter',fac:'prism',cost:9,type:'unit',rar:'Legendary',atk:8,hp:8,kw:['Armored'],armor:2,shape:'bulky',text:'Armored 2.'});
 // Ember (aggro / burn)
-C({id:'hi_e_warlord',name:'Ember Warlord',fac:'ember',cost:7,type:'unit',rar:'Epic',atk:7,hp:5,kw:['Frenzy'],shape:'bulky',text:'Frenzy.'});
+C({id:'hi_e_warlord',name:'Ember Warlord',fac:'ember',cost:7,type:'unit',rar:'Epic',atk:7,hp:5,kw:['Rage'],shape:'bulky',text:'Frenzy.'});
 C({id:'hi_e_meteor',name:'Meteor Fall',fac:'ember',cost:8,type:'spell',rar:'Legendary',shape:'star',text:'Deal 4 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:4,placement:'global'}});
 C({id:'hi_e_titan',name:'Magma Titan',fac:'ember',cost:10,type:'unit',rar:'Legendary',atk:10,hp:8,kw:['Strikethrough'],shape:'bulky',text:'Strikethrough.'});
 // Dawn (armor / lifesteal / defense)
@@ -193,11 +208,12 @@ C({id:'hi_n_oblivion',name:'Total Oblivion',fac:'null',cost:9,type:'spell',rar:'
 C({id:'hi_n_eternity',name:'Eternity Warden',fac:'null',cost:10,type:'unit',rar:'Legendary',atk:8,hp:9,kw:['Deadly','Armored'],armor:1,shape:'bulky',text:'Deadly. Armored 1.'});
 // Sky (tempo / strikethrough)
 C({id:'hi_s_tempest',name:'Tempest Sovereign',fac:'sky',cost:7,type:'unit',rar:'Epic',atk:6,hp:5,kw:['Double Strike'],shape:'winged',text:'Double Strike.'});
-C({id:'hi_s_leviathan',name:'Storm Leviathan',fac:'sky',cost:8,type:'unit',rar:'Legendary',atk:8,hp:6,kw:['Strikethrough'],shape:'winged',text:'Strikethrough.'});
+C({id:'hi_s_leviathan',name:'Storm Leviathan',fac:'sky',cost:8,type:'unit',rar:'Legendary',atk:8,hp:6,kw:['Double Strike'],shape:'winged',text:'Strikethrough.'});
 C({id:'hi_s_maelstrom',name:'Maelstrom',fac:'sky',cost:10,type:'spell',rar:'Legendary',shape:'star',text:'Deal 3 to all enemy units, then draw 3.',eff:{kind:'tempest',amt:3,draw:3,placement:'global'}});
 
 // --- SUPERPOWERS (granted by the Block Meter; fac 'super' keeps them out of decks) ---
 C({id:'tok_bloom',name:'Bloom',fac:'super',cost:0,type:'unit',rar:'Common',atk:2,hp:2,shape:'leaf',text:'A burst of life.'});
+C({id:'tok_gnat',name:'Gnat',fac:'super',cost:0,type:'unit',rar:'Common',atk:1,hp:1,shape:'winged',text:'A buzzing swarm-fly.'});
 C({id:'sp_nova',name:'Sunflare Nova',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'star',text:'Deal 2 to all enemy units and the enemy Hero.',eff:{kind:'wildfire',amt:2,placement:'global'}});
 C({id:'sp_aegisdawn',name:'Dawnward Aegis',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'helm',text:'Your units gain +0/+2 and a Shield.',eff:{kind:'massBuff',hp:2,shield:true,placement:'global'}});
 C({id:'sp_phoenix',name:'Phoenix Heart',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'star',text:'Heal your Hero 4. Your units gain +1/+0.',eff:{kind:'massBuff',atk:1,heal:4,placement:'global'}});
@@ -208,34 +224,51 @@ C({id:'sp_overgrowth',name:'Overgrowth',fac:'super',cost:0,type:'spell',rar:'Leg
 C({id:'sp_grovewall',name:'Heart of the Grove',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'leaf',text:'Your units gain +1/+3.',eff:{kind:'massBuff',atk:1,hp:3,placement:'global'}});
 C({id:'sp_skyassault',name:'Sky Assault',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Your units gain +2/+1.',eff:{kind:'massBuff',atk:2,hp:1,placement:'global'}});
 C({id:'sp_firewing',name:'Firewing Barrage',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Deal 1 to all enemies and the enemy Hero, then draw.',eff:{kind:'wildfire',amt:1,draw:1,placement:'global'}});
+C({id:'sp_galecut',name:'Galecut Surge',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'winged',text:'Your units gain +1/+1, then draw a card.',eff:{kind:'massBuff',atk:1,hp:1,draw:1,placement:'global'}});
+C({id:'sp_emberveil',name:'Emberveil Reckoning',fac:'super',cost:0,type:'spell',rar:'Legendary',super:true,shape:'serpent',text:'Destroy the strongest enemy unit, then deal 1 to the enemy Hero.',eff:{kind:'destroyStrongest',heroDamage:1,placement:'global'}});
 
 const getCard=id=>CARDS[id];
 
 /* ====================== DATA: HEROES ====================== */
 const HEROES = [
-  {id:'solara', name:'Solara Vek', title:'The Kindled Dawn', facs:['ember','dawn'], hue:H.dawn,
+  {id:'solara', side:'radiant', name:'Solara Vek', title:'The Kindled Dawn', facs:['ember','dawn'], hue:H.dawn,
     power:{name:'Sunflare', cost:2, text:'Deal 1 damage to a lane (unit or Hero).', placement:'lane', kind:'laneDamage', amt:1},
     difficulty:'Easy', playstyle:'Aggressive burn — trade efficiently and chip the rival down with direct damage.',
-    supers:['sp_nova','sp_aegisdawn','sp_phoenix']},
-  {id:'vesper', name:'Vesper Quill', title:'Whisper of the Null', facs:['null','sky'], hue:H.null,
+    supers:['sp_nova','sp_aegisdawn','sp_phoenix','sp_grovewall']},
+  {id:'vesper', side:'umbral', name:'Vesper Quill', title:'Whisper of the Null', facs:['null','sky'], hue:H.null,
     power:{name:'Hush', cost:2, text:'Freeze the enemy unit in a lane.', placement:'lane', kind:'freezeLane'},
     difficulty:'Hard', playstyle:'Control — freeze threats, stall the board, and grind out the late game.',
-    supers:['sp_freeze','sp_nullstorm','sp_voidcall']},
-  {id:'bram',  name:'Bram Mossfist', title:'Warden of the Grove', facs:['flux','dawn'], hue:H.flux,
+    supers:['sp_freeze','sp_nullstorm','sp_voidcall','sp_skyassault']},
+  {id:'bram', side:'radiant',  name:'Bram Mossfist', title:'Warden of the Grove', facs:['flux','dawn'], hue:H.flux,
     power:{name:'Sprout', cost:2, text:'Summon a 1/1 Sapling to a lane.', placement:'lane', kind:'summonToken', token:'f_sapling', ally:true},
     difficulty:'Medium', playstyle:'Go-wide swarm — flood the lanes with bodies and buff them all at once.',
-    supers:['sp_overgrowth','sp_grovewall','sp_phoenix']},
-  {id:'kestrel',name:'Kestrel Vane', title:'Edge of the Sky', facs:['sky','ember'], hue:H.sky,
+    supers:['sp_overgrowth','sp_grovewall','sp_phoenix','sp_galecut']},
+  {id:'kestrel', side:'umbral',name:'Kestrel Vane', title:'Edge of the Sky', facs:['sky','null'], hue:H.sky,
     power:{name:'Updraft', cost:1, text:'Give a friendly unit +1/+1.', placement:'lane', kind:'buffUnit', atk:1, hp:1, ally:true},
     difficulty:'Medium', playstyle:'Tempo — cheap fliers and a 1-cost buff to snowball early pressure.',
-    supers:['sp_skyassault','sp_firewing','sp_nova']},
+    supers:['sp_skyassault','sp_firewing','sp_nova','sp_galecut']},
+  {id:'tarn', side:'radiant',  name:'Tarn Vellurae', title:'The Tidal Current', facs:['flux','dawn'], hue:H.flux,
+    power:{name:'Surge', cost:1, text:'Give a friendly unit +2/+0.', placement:'lane', kind:'buffUnit', atk:2, hp:0, ally:true},
+    difficulty:'Medium', playstyle:'Value tempo — as Responder, lean on Strikethrough overflow and Lifesteal swings to win long boards.',
+    supers:['sp_galecut','sp_skyassault','sp_overgrowth','sp_nullstorm']},
+  {id:'ashka', side:'umbral', name:'Ashka Rune', title:'The Cinder Verdict', facs:['null','sky'], hue:H.null,
+    power:{name:'Scorch', cost:2, text:'Deal 2 damage to an enemy unit in a lane.', placement:'lane', kind:'laneDamage', amt:2, unitOnly:true},
+    difficulty:'Hard', playstyle:'Aggressive control — as Vanguard, weaponize Deadly removal and Frenzy beaters to push lethal.',
+    supers:['sp_emberveil','sp_nova','sp_voidcall','sp_freeze']},
+  {id:'zix',   side:'umbral', name:'Zix Marrow', title:'The Swarmcaller', facs:['null','sky'], hue:H.sky,
+    power:{name:'Brood', cost:2, text:'Summon two 1/1 Gnats to empty lanes.', placement:'self', kind:'summonSpread', token:'tok_gnat', count:2, ally:true},
+    difficulty:'Medium', playstyle:'Go-wide swarm — flood lanes with cheap fliers and overwhelm before Radiant stabilizes.',
+    supers:['sp_skyassault','sp_overgrowth','sp_galecut','sp_nova']},
+  {id:'orin',  side:'radiant', name:'Orin Daye', title:'The Steadfast Lantern', facs:['dawn','ember'], hue:H.dawn,
+    power:{name:'Renew', cost:2, text:'Heal your Hero 3.', placement:'self', kind:'healHero', amt:3},
+    difficulty:'Medium', playstyle:'Defensive value — soak early aggression, heal through the long game, and win on the grind.',
+    supers:['sp_aegisdawn','sp_phoenix','sp_grovewall','sp_nova']},
 ];
 const getHero=id=>HEROES.find(h=>h.id===id)||HEROES[0];
 
 /* ====================== DECK BUILDING ====================== */
 function deckForHero(heroId, rng){
-  const hero=getHero(heroId);
-  const facs=new Set([...hero.facs,'prism']);
+  const facs=factionsForHero(heroId);
   const pool=Object.values(CARDS).filter(c=>facs.has(c.fac));
   const copies={Common:4,Rare:4,Epic:3,Legendary:2};
   let list=[];
@@ -247,7 +280,6 @@ function deckForHero(heroId, rng){
 
 
 /* ---- engine: state, combat, effects, draws, turn flow (from script_b.js) ---- */
-/* ====================== ENGINE ====================== */
 let state=null;
 
 // Centralized game RNG. ALL randomness that affects game state (shuffles, draws,
@@ -272,6 +304,22 @@ function makeUnit(cardId, side, lane){
   return u;
 }
 function hasKw(u,k){ return u && u.keywords && u.keywords.includes(k); }
+
+/* ---- SIDE-OWNED KEYWORDS (PvZ-Heroes-style faction identity) ----
+   Identity lives in the SIDE, like Plants vs Zombies. Umbral (the aggro side) owns
+   the aggressive keywords; Radiant (the value side) owns the reactive keywords.
+   Because card pools are side-locked, these keywords only ever appear on the owning
+   side's cards — so combat just reads hasKw and they always fire for their owner.
+   This table is the single source of truth the UI uses to label keywords by side. */
+const SIDE_KEYWORDS = {
+  umbral:  ['Frenzy', 'Deadly', 'Double Strike'],   // aggressive — push damage through
+  radiant: ['Strikethrough', 'Lifesteal', 'Rage', 'Last Breath']  // reactive value
+};
+function keywordSide(k){
+  if(SIDE_KEYWORDS.umbral.includes(k)) return 'umbral';
+  if(SIDE_KEYWORDS.radiant.includes(k)) return 'radiant';
+  return null;  // shared keyword (Armored, Stun, Freeze): both sides
+}
 
 function createMatch({seed, players, humanSide=0, vanguardSide}){
   const rng=makeRng(seed);
@@ -369,16 +417,25 @@ function dealUnitDamage(u, amt, opts={}, fx){
 function dealHeroDamage(side, amt, fx){
   if(amt<=0) return;
   const p=state.players[side];
+  // Block meter charges a RANDOM 1–3 segments per hit, regardless of how hard the hit is.
+  // When that charge fills the meter, the triggering hit is FULLY blocked (hero takes 0),
+  // a signature super is generated, and any overflow carries into the next meter.
+  const cap=p.blockCap;
+  const gain=1+rngInt(3);                          // random 1, 2, or 3 segments
+  const projected=(p.block||0)+gain;
+  if(p.hp>0 && projected>=cap){
+    p.block = projected - cap;                      // overflow carries over
+    fx&&fx.push({type:'blocked', side, amt});       // shield/impact event (animated by the view)
+    const sid=grantSuper(side,fx);
+    fx&&fx.push({type:'superpower', side, cardId:sid});
+    logLine(`${p.name} blocks the blow and channels power!`);
+    checkWin();
+    return;
+  }
+  // Meter not full: charge it and take the damage normally.
+  p.block=projected;
   p.hp=Math.max(0,p.hp-amt);
   fx&&fx.push({type:'heroDmg',side,amt});
-  // Block meter: 8 segments. Each hit charges it a random 1–3 segments.
-  const gain=1+rngInt(3);
-  p.block=(p.block||0)+gain;
-  if(p.hp>0 && p.block>=p.blockCap){
-    p.block-=p.blockCap;                         // carry the overflow
-    const sid=grantSuper(side,fx);
-    fx&&fx.push({type:'superpower',side,cardId:sid});
-  }
   checkWin();
 }
 function grantSuper(side, fx){
@@ -419,6 +476,7 @@ function applyEffect(side, eff, lane, fx, sourceUid){
         fx&&fx.push({type:'buff',uid:u.uid});
       }
       if(eff.heal) healHero(side,eff.heal,fx);
+      if(eff.draw) drawCard(side, eff.draw, fx);
       break; }
     case 'freezeAll':{ for(const u of allUnits()) if(u.side===opp){ u.frozen=true; fx&&fx.push({type:'freeze',uid:u.uid}); } break; }
     case 'summonAll':{ for(let i=0;i<5;i++) if(!allyUnit(side,i)){ const t=placeUnit(side,i,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
@@ -427,7 +485,7 @@ function applyEffect(side, eff, lane, fx, sourceUid){
       for(const u of allUnits()) if(u.side===side){ u.attack+=eff.atk||0; if(eff.hp){ u.health+=eff.hp; u.maxHealth+=eff.hp; } fx&&fx.push({type:'buff',uid:u.uid}); }
       break; }
     case 'destroyAll':{ for(const u of allUnits()) if(u.side===opp) dealUnitDamage(u,9999,{deadly:true,ignoreArmor:true},fx); break; }
-    case 'destroyStrongest':{ let best=null; for(const u of allUnits()) if(u.side===opp){ if(!best||(u.attack+u.health)>(best.attack+best.health)) best=u; } if(best) dealUnitDamage(best,9999,{deadly:true,ignoreArmor:true},fx); break; }
+    case 'destroyStrongest':{ let best=null; for(const u of allUnits()) if(u.side===opp){ if(!best||(u.attack+u.health)>(best.attack+best.health)) best=u; } if(best) dealUnitDamage(best,9999,{deadly:true,ignoreArmor:true},fx); if(eff.heroDamage) dealHeroDamage(opp, eff.heroDamage, fx); break; }
     case 'destroy':{ const u=enemyUnit(side,lane); if(u){ dealUnitDamage(u,9999,{deadly:true,ignoreArmor:true},fx); } break; }
     case 'silence':{ const u=enemyUnit(side,lane); if(u){ u.keywords=[]; u.armor=0; u.frozen=false; u.burn=0; fx&&fx.push({type:'silence',uid:u.uid}); } break; }
     case 'freezeLane':{ const u=enemyUnit(side,lane); if(u){ u.frozen=true; fx&&fx.push({type:'freeze',uid:u.uid}); } break; }
@@ -435,13 +493,20 @@ function applyEffect(side, eff, lane, fx, sourceUid){
     case 'aegis':{ const u=allyUnit(side,lane); if(u){ u.health+=3; u.maxHealth+=3; u.shield=true; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
     case 'updraft':{ const u=allyUnit(side,lane); if(u){ u.attack+=2; u.health+=1; u.maxHealth+=1; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
     case 'buffUnit':{ const u=allyUnit(side,lane); if(u){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
-    case 'rally':{ for(const u of allUnits()) if(u.side===side && u.uid!==sourceUid){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
-    case 'summonToken':{ if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
+    case 'siphon':{ dealHeroDamage(opp, eff.amt||1, fx); if(eff.draw) drawCard(side, eff.draw, fx); break; }
     case 'summonSpread':{
+      // Hero-power variant: placement 'self' spreads `count` tokens across empty lanes.
+      if(eff.placement==='self' || lane==null){
+        let n=eff.count||2;
+        for(let i=0;i<5 && n>0;i++){ if(!allyUnit(side,i)){ const t=placeUnit(side,i,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); n--; } }
+        break;
+      }
       if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); }
       const adj=[lane+1,lane-1].find(j=>j>=0&&j<5&&!allyUnit(side,j));
       if(adj!=null){ const t2=placeUnit(side,adj,eff.token); fx&&fx.push({type:'summon',uid:t2.uid}); }
       break; }
+    case 'rally':{ for(const u of allUnits()) if(u.side===side && u.uid!==sourceUid){ u.attack+=eff.atk||0; u.health+=eff.hp||0; u.maxHealth+=eff.hp||0; fx&&fx.push({type:'buff',uid:u.uid}); } break; }
+    case 'summonToken':{ if(!allyUnit(side,lane)){ const t=placeUnit(side,lane,eff.token); fx&&fx.push({type:'summon',uid:t.uid}); } break; }
   }
   reapDead(fx);
   checkWin();
@@ -504,17 +569,25 @@ function resolveLaneStrikes(laneIndex){
 }
 
 // returns {ok, fx, summonedUid} — mutates state
+// A generated superpower costs 1 energy to play (it is not free). All other cards use
+// their printed cost. Centralized so cost-check and energy-spend always agree.
+function effectiveCost(card, inst){
+  if((inst && inst.super) || card.super) return 1;
+  return card.cost;
+}
+
 function playCard(side, iid, lane){
   const p=state.players[side];
   const idx=p.hand.findIndex(h=>h.iid===iid);
   if(idx<0) return {ok:false,error:'Card not in hand.'};
   const inst=p.hand[idx]; const card=getCard(inst.cardId);
-  if(card.cost>p.energy) return {ok:false,error:'Not enough energy.'};
+  const cost=effectiveCost(card, inst);
+  if(cost>p.energy) return {ok:false,error:'Not enough energy.'};
   const fx=[];
 
   if(card.type==='unit'){
     if(lane==null || allyUnit(side,lane)) return {ok:false,error:'Choose an empty lane.'};
-    p.energy-=card.cost; p.hand.splice(idx,1);
+    p.energy-=cost; p.hand.splice(idx,1);
     const u=placeUnit(side,lane,card.id);
     fx.push({type:'energy',side});
     if(card.eff) applyEffect(side, card.eff, lane, fx, u.uid);
@@ -528,7 +601,7 @@ function playCard(side, iid, lane){
       const valid=targetLanes(side, spec);
       if(!valid.includes(lane)) return {ok:false,error:'Invalid target.'};
     }
-    p.energy-=card.cost; p.hand.splice(idx,1); p.discard.push(inst.cardId);
+    p.energy-=cost; p.hand.splice(idx,1); p.discard.push(inst.cardId);
     fx.push({type:'cast',side,lane,card:card.id});
     if(spec) applyEffect(side, spec, lane, fx);
     logLine(`${p.name} cast ${card.name}.`);
@@ -608,6 +681,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     createMatch, setActiveState, getActiveState, coreDispatch,
     roundUpkeep, checkWin, resolveLaneStrikes, applyStrike, reapDead, drawCard,
-    allUnits, CARDS, HEROES, getCard, getHero, deckForHero, makeRng
+    allUnits, CARDS, HEROES, getCard, getHero, deckForHero, makeRng,
+    SIDES, sideOfHero, sideOfFaction, factionsForHero
   };
 }
