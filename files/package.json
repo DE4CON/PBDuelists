@@ -1,0 +1,15 @@
+{
+  "name": "prismbreak-server",
+  "version": "1.0.0",
+  "description": "Friend-match multiplayer server for Prismbreak Duelists (MVP).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build-engine": "node build-engine.js ../build/script_a.js ../build/script_b.js",
+    "test": "node test-engine.js && node test-match.js && node test-reconnect.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "engines": { "node": ">=18" }
+}
