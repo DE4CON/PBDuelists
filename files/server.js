@@ -42,7 +42,7 @@ function lobbyView(room) {
   return {
     code: room.code, phase: room.phase,
     players: room.players.map(p => ({
-      name: p.name, heroId: p.heroId, hasDeck: !!(p.deck && p.deck.length),
+      name: p.name, heroId: p.heroId, hasDeck: !!(p.deck && p.deck.length), loadoutSet: !!p.loadoutSet,
       ready: p.ready, connected: p.connected, side: p.side
     }))
   };
@@ -56,14 +56,10 @@ function fog(state, side) {
   s.players[opp].hand = s.players[opp].hand.map(() => ({ hidden: true }));
   s.players[opp].deck = s.players[opp].deck.length;
   s.players[side].deck = s.players[side].deck.length;
+  s.humanSide = side;        // render from THIS player's perspective
   delete s.rng;
   return s;
 }
-function pushState(room, extra) {
-  room.players.forEach(p => send(p.ws, 'stateSnapshot',
-    Object.assign({ snapshot: fog(room.state, p.side) }, extra || {})));
-}
-
 function startMatch(room) {
   const seed = 'rift-' + Date.now() + '-' + Math.floor(Math.random() * 1e6);
   room.players[0].side = 0; room.players[1].side = 1;
@@ -168,7 +164,7 @@ const MIME = { '.html':'text/html', '.js':'application/javascript', '.css':'text
 // Serves the game page + assets from ./public (optional convenience: one origin for page + socket).
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent((req.url || '/').split('?')[0]);
-  if (p === '/') p = '/index.html';
+  if (p === '/' || /^\/join\/[A-Za-z0-9-]+$/.test(p)) p = '/index.html';   // invite links serve the app
   const file = path.join(PUBLIC, path.normalize(p).replace(/^(\.\.[\/\\])+/, ''));
   if (!file.startsWith(PUBLIC)) { res.writeHead(403); return res.end('forbidden'); }
   fs.readFile(file, (err, data) => {
@@ -207,7 +203,7 @@ wss.on('connection', ws => {
     }
 
     else if (type === 'setLoadout' && room && player) {
-      player.heroId = payload.heroId; player.deck = payload.deck; player.ready = false;
+      player.heroId = payload.heroId; player.deck = payload.deck; player.loadoutSet = true; player.ready = false;
       broadcastLobby(room);
     }
 
@@ -215,7 +211,7 @@ wss.on('connection', ws => {
       player.ready = !!payload.ready;
       broadcastLobby(room);
       if (room.phase === 'lobby' && room.players.length === 2 &&
-          room.players.every(p => p.ready && p.heroId && p.deck && p.deck.length)) {
+          room.players.every(p => p.ready && p.heroId && p.loadoutSet)) {
         startMatch(room);
       }
     }
