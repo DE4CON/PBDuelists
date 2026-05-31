@@ -356,20 +356,20 @@ svg{ display:block; }
 .hud.bottom{ margin-top:auto; }
 
 .heroplate{
-  display:flex; align-items:center; gap:12px;
-  padding:8px 14px 8px 8px; border-radius:999px;
+  display:flex; align-items:center; gap:10px;
+  padding:5px 14px 5px 5px; border-radius:999px;
   background: linear-gradient(180deg, hsla(var(--hue),60%,30%,.55), hsla(var(--hue),50%,16%,.6));
   border:1px solid hsla(var(--hue),70%,60%,.4);
   box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.12);
   position:relative;
 }
 .heroplate .portrait{
-  width:54px;height:54px;border-radius:50%;
+  width:46px;height:46px;border-radius:50%;
   background: radial-gradient(circle at 40% 32%, hsla(var(--hue),90%,72%,1), hsla(var(--hue),70%,38%,1) 72%);
   box-shadow: inset 0 -5px 12px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.4);
   display:grid;place-items:center; flex:none;
 }
-.heroplate .portrait svg{ width:40px;height:40px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+.heroplate .portrait svg{ width:34px;height:34px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
 .heroplate .meta{ display:flex;flex-direction:column; line-height:1.05; min-width:84px; }
 .heroplate .meta b{ font-family:var(--font-display); font-size:16px; letter-spacing:.3px; }
 .heroplate .meta small{ color:var(--muted); font-weight:800; font-size:11px; }
@@ -393,12 +393,19 @@ svg{ display:block; }
 .d-block{ color:#bfe9ff !important; text-shadow:0 0 12px rgba(150,225,255,.9); font-weight:900; }
 
 .deckpile{ display:flex; align-items:center; gap:6px; color:var(--muted); font-weight:900; font-size:12px; }
-.counts{ display:flex; align-items:center; gap:12px; }
-.ct{ display:flex; align-items:center; gap:5px; color:var(--muted); font-weight:900; font-size:12px; }
-.ct .ci{ font-size:13px; opacity:.85; filter:grayscale(.2); }
-.ct.hand .num{ color:#dfe8ff; }
-.ct.hand{ position:relative; }
-.ct.hand::after{ content:'hand'; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; }
+.counts{ display:flex; align-items:center; gap:14px; }
+.handcount{ display:flex; align-items:center; gap:6px; position:relative; }
+.handcount .hc-card{ width:20px; height:27px; border-radius:4px; flex:0 0 auto;
+  background:linear-gradient(150deg, #3a5bd0, #21306e);
+  border:1.5px solid rgba(150,190,255,.6);
+  box-shadow:0 2px 5px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.25);
+  position:relative; }
+.handcount .hc-card::after{ content:''; position:absolute; inset:3px; border-radius:2px; border:1px solid rgba(150,190,255,.35); }
+.handcount .num{ font-family:var(--font-display); font-size:15px; color:#dfe8ff; }
+.handcount::after{ content:'hand'; position:absolute; bottom:-12px; left:0; font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; }
+.deckpile::after{ content:'deck'; position:absolute; bottom:-12px; left:0; font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; }
+.deckpile{ position:relative; }
+.energy.push{ margin-right:auto; }
 .energy-name{ font-size:8px; letter-spacing:1px; color:var(--dim); text-transform:uppercase; margin-left:4px; align-self:flex-end; }
 #concedebtn{ font-size:18px; color:#ff9aa6; }
 #concedebtn:hover{ background:rgba(255,90,110,.16); border-color:rgba(255,90,110,.5); }
@@ -894,31 +901,53 @@ svg{ display:block; }
 }
 
 /* ---------- CARD TOOLTIP ---------- */
-.cardtip{ position:fixed; z-index:95; width:230px; pointer-events:none;
-  background:linear-gradient(180deg, rgba(20,28,52,.98), rgba(12,18,36,.98));
-  border:1px solid var(--line-2); border-radius:16px; padding:14px 15px;
-  box-shadow:0 24px 60px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.12);
-  transform-origin:center bottom; animation: tipPop .16s ease-out; }
-@keyframes tipPop{ from{ opacity:0; transform:translateY(6px) scale(.96) } to{ opacity:1; transform:none } }
-.cardtip .tip-head{ display:flex; align-items:center; gap:8px; margin-bottom:7px; }
-.cardtip .tip-cost{ width:30px;height:30px;flex:0 0 auto; display:grid;place-items:center; position:relative; font-family:var(--font-display); font-size:15px; }
-.cardtip .tip-cost svg{ position:absolute; inset:0; width:100%;height:100% }
-.cardtip .tip-cost span{ position:relative; }
-.cardtip .tip-name{ font-family:var(--font-display); font-size:16px; line-height:1.1; }
-.cardtip .tip-type{ font-size:10.5px; font-weight:800; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); }
-.cardtip .tip-stats{ display:flex; gap:14px; margin:8px 0; }
-.cardtip .tip-stat{ display:flex; align-items:center; gap:5px; font-family:var(--font-display); font-size:17px; }
-.cardtip .tip-stat svg{ width:20px;height:20px; }
-.cardtip .tip-kw{ display:flex; flex-direction:column; gap:5px; margin:8px 0 4px; }
-.cardtip .tip-kwrow{ display:flex; align-items:center; gap:7px; font-size:11.5px; }
-.cardtip .tip-kwrow svg{ width:15px;height:15px;flex:0 0 auto; }
-.cardtip .tip-kwrow b{ color:#ffe08a; font-weight:900; }
-.cardtip .tip-desc{ font-size:12px; color:var(--dim); line-height:1.45; margin-top:6px; }
-.cardtip .tip-rar{ display:inline-block; margin-top:8px; font-size:10px; font-weight:900; letter-spacing:.8px; text-transform:uppercase; padding:2px 8px; border-radius:999px; }
-.tip-rar.r-common{ background:rgba(180,190,210,.18); color:#cfd8e8; }
-.tip-rar.r-rare{ background:rgba(90,170,255,.2); color:#9fd0ff; }
-.tip-rar.r-epic{ background:rgba(179,136,255,.22); color:#d8c2ff; }
-.tip-rar.r-legendary{ background:rgba(255,205,90,.22); color:#ffe08a; }
+/* ---------- CARD PREVIEW (PvZ-Heroes-style centered card) ---------- */
+.cardtip{ position:fixed; inset:0; z-index:95; display:grid; place-items:center; pointer-events:auto; }
+.cardtip[hidden]{ display:none; }
+.cardtip .tipbackdrop{ position:absolute; inset:0; background:rgba(6,9,18,.72); backdrop-filter:blur(4px); animation:tipFade .18s ease-out; }
+@keyframes tipFade{ from{ opacity:0 } to{ opacity:1 } }
+.tipcard{
+  position:relative; width:min(330px,86vw); border-radius:22px; padding:0 0 16px;
+  background:linear-gradient(180deg, hsla(var(--hue),48%,30%,.97), hsla(var(--hue),40%,15%,.98));
+  border:3px solid hsla(var(--hue),85%,62%,.9);
+  box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 40px hsla(var(--hue),80%,45%,.4), inset 0 1px 0 rgba(255,255,255,.18);
+  animation:tipCardPop .22s cubic-bezier(.2,.9,.3,1.3); text-align:center;
+}
+@keyframes tipCardPop{ from{ opacity:0; transform:translateY(14px) scale(.92) } to{ opacity:1; transform:none } }
+.tipcard.r-rare{ border-color:#7fc8ff; box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 40px rgba(90,170,255,.45), inset 0 1px 0 rgba(255,255,255,.18); }
+.tipcard.r-epic{ border-color:#c79bff; box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 44px rgba(179,136,255,.5), inset 0 1px 0 rgba(255,255,255,.18); }
+.tipcard.r-legendary{ border-color:#ffd05a; box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 50px rgba(255,205,90,.55), inset 0 1px 0 rgba(255,255,255,.2); }
+.tc-art{
+  position:relative; height:138px; border-radius:19px 19px 0 0;
+  background:radial-gradient(circle at 50% 38%, hsla(var(--hue),72%,58%,.85), hsla(var(--hue),55%,22%,.9));
+  display:grid; place-items:center; overflow:hidden;
+}
+.tc-art svg{ width:108px; height:108px; filter:drop-shadow(0 6px 10px rgba(0,0,0,.4)); }
+.tc-cost{ position:absolute; top:9px; left:9px; width:42px;height:42px; display:grid;place-items:center; font-family:var(--font-display); font-size:21px; color:#06243f; }
+.tc-cost svg{ position:absolute; inset:0; width:100%;height:100%; }
+.tc-cost span{ position:relative; }
+.tc-hp{ position:absolute; bottom:8px; right:10px; width:40px;height:40px; display:grid;place-items:center; font-family:var(--font-display); }
+.tc-hp svg{ position:absolute; inset:0; width:100%;height:100%; } .tc-hp i{ position:relative; font-style:normal; color:#fff; font-size:17px; }
+.tc-name{ font-family:var(--font-display); font-size:23px; letter-spacing:.5px; color:#fff; margin:11px 14px 2px; text-shadow:0 2px 4px rgba(0,0,0,.5); }
+.tc-type{ font-size:12px; font-weight:800; color:hsla(var(--hue),60%,86%,1); letter-spacing:.5px; }
+.tc-body{ margin:11px 16px 6px; background:rgba(0,0,0,.34); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:12px 13px; min-height:54px; }
+.tc-stats{ display:flex; justify-content:center; gap:22px; margin-bottom:9px; }
+.tc-stat{ position:relative; width:40px;height:40px; display:grid;place-items:center; font-family:var(--font-display); font-size:19px; }
+.tc-stat svg{ position:absolute; inset:0; width:100%;height:100%; } .tc-stat i{ position:relative; font-style:normal; color:#fff; }
+.tc-desc{ font-size:13.5px; color:#eaf2ff; line-height:1.5; } .tc-desc.dim{ color:var(--muted); }
+.tc-kw{ display:flex; flex-direction:column; gap:6px; margin-top:9px; text-align:left; }
+.tc-kwrow{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--dim); }
+.tc-kwrow svg{ width:16px;height:16px;flex:0 0 auto; } .tc-kwrow b{ color:#ffe08a; }
+.tc-rar{ display:inline-block; margin-top:11px; font-size:12px; font-weight:900; letter-spacing:1.5px; padding:4px 16px; border-radius:999px;
+  background:linear-gradient(90deg, rgba(180,190,210,.25), rgba(180,190,210,.12)); color:#cfd8e8; border:1px solid rgba(255,255,255,.18); }
+.tc-rar.r-rare{ background:linear-gradient(90deg, rgba(90,170,255,.3), rgba(90,170,255,.12)); color:#bfe0ff; border-color:rgba(90,170,255,.5); }
+.tc-rar.r-epic{ background:linear-gradient(90deg, rgba(179,136,255,.32), rgba(179,136,255,.14)); color:#dcc8ff; border-color:rgba(179,136,255,.55); }
+.tc-rar.r-legendary{ background:linear-gradient(90deg, rgba(255,205,90,.34), rgba(255,205,90,.14)); color:#ffe7a8; border-color:rgba(255,205,90,.6); }
+@media (orientation:landscape) and (max-height:560px){
+  .tipcard{ width:min(280px,52vw); padding-bottom:10px; }
+  .tc-art{ height:104px; } .tc-art svg{ width:80px;height:80px; }
+  .tc-name{ font-size:18px; margin-top:7px; } .tc-body{ min-height:40px; padding:9px 11px; margin:8px 12px 4px; }
+}
 
 /* ---------- DRAG GHOST ---------- */
 .dragghost{ position:fixed; z-index:96; width:118px; pointer-events:none; transform:translate(-50%,-50%) rotate(-4deg); filter:drop-shadow(0 18px 26px rgba(0,0,0,.6)); will-change:left,top; }
@@ -931,6 +960,51 @@ svg{ display:block; }
 .lane.snap{ border-color:rgba(120,255,210,.95) !important; background:rgba(120,255,210,.2) !important; box-shadow:inset 0 0 34px rgba(60,224,170,.4), 0 0 26px rgba(60,224,170,.45) !important; transform:translateY(-3px); transition:all .14s ease; animation:none !important; }
 .lane.blocked{ border-color:rgba(255,110,120,.55) !important; background:rgba(255,90,100,.07) !important; cursor:not-allowed; }
 .lane.blocked::after{ content:"✕"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:30px; color:rgba(255,120,130,.7); font-weight:900; pointer-events:none; z-index:4; }
+
+/* ============================================================
+   MOBILE — landscape-first. The game is wide (5 lanes + hand),
+   so phones play in landscape. Portrait shows a rotate prompt.
+   ============================================================ */
+#rotate-prompt{ display:none; }
+@media (max-width:1000px) and (orientation:portrait){
+  /* Only block portrait while actually in a match (menus/setup are fine vertical). */
+  body.in-match #rotate-prompt{
+    display:grid; place-items:center; position:fixed; inset:0; z-index:9999;
+    background:radial-gradient(circle at 50% 40%, #18213f, #070b16);
+  }
+  body.in-match #shake{ filter:blur(3px); }
+}
+.rp-card{ text-align:center; padding:30px; }
+.rp-icon{ font-size:54px; animation:rpSpin 2.4s ease-in-out infinite; }
+@keyframes rpSpin{ 0%,100%{ transform:rotate(-12deg) } 50%{ transform:rotate(78deg) } }
+.rp-title{ font-family:var(--font-display); font-size:24px; letter-spacing:1px; margin-top:14px; color:#eaf2ff; }
+.rp-sub{ color:var(--muted); font-size:14px; max-width:320px; margin:8px auto 0; line-height:1.5; }
+
+/* Landscape phones / short viewports: shrink the match so everything fits one frame. */
+@media (orientation:landscape) and (max-height:560px){
+  .hud{ padding:6px 10px; gap:8px; }
+  .heroplate{ transform:scale(.82); transform-origin:left center; }
+  .hud.top .heroplate{ transform-origin:left center; }
+  .roundtag .r{ font-size:14px; } .roundtag .who{ font-size:9px; }
+  .boardwrap{ padding:2px 8px; }
+  .board{ width:min(1080px,96vw); gap:8px; transform:perspective(1400px) rotateX(9deg); }
+  .lane{ padding:6px 5px; border-radius:12px; }
+  .handwrap{ height:128px; }
+  .card{ width:86px; height:120px; margin:0 -10px; }
+  .card .namebar{ font-size:9px; } .card .ctext{ font-size:7.5px; }
+  .controls .btn{ padding:9px 12px; font-size:13px; }
+  .controls{ gap:6px; }
+  .energy .pips i{ width:9px; height:9px; }
+  .counts{ gap:8px; }
+}
+/* Very short landscape (small phones held sideways) — go even tighter. */
+@media (orientation:landscape) and (max-height:430px){
+  .heroplate{ transform:scale(.72); }
+  .handwrap{ height:108px; }
+  .card{ width:74px; height:104px; margin:0 -8px; }
+  .roundtag{ display:none; }
+  .controls .btn.power span.pc{ display:none; }
+}
 
 </style>
 </head>
@@ -953,6 +1027,13 @@ svg{ display:block; }
 <div id="dragghost" class="dragghost" hidden></div>
 <div class="bigbanner" id="banner"><div class="txt"></div></div>
 <div class="result" id="result"></div>
+<div id="rotate-prompt">
+  <div class="rp-card">
+    <div class="rp-icon">📱↻</div>
+    <div class="rp-title">Rotate your device</div>
+    <div class="rp-sub">Prismbreak plays best in landscape. Turn your phone sideways to duel.</div>
+  </div>
+</div>
 <script>
 "use strict";
 /* ============================================================================
@@ -2050,6 +2131,7 @@ function setScreen(name){
   dom.deck.classList.toggle('on', name==='deck');
   dom.match.classList.toggle('on', name==='match');
   if(dom.lobby) dom.lobby.classList.toggle('on', name==='lobby');
+  document.body.classList.toggle('in-match', name==='match');
 }
 
 /* ---- MENU ---- */
@@ -2457,8 +2539,8 @@ function buildMatchDOM(){
         ${heroPlate(opp)}
         <div class="roundtag"><div class="r">ROUND 1</div><div class="who">THE RIFT OPENS</div></div>
         <div class="counts" id="counts-${opp}">
-          <div class="ct hand"><span class="ci">✋</span><span class="num" id="hand-${opp}">0</span></div>
-          <div class="deckpile" id="deck-${opp}"><span class="stack"></span><span class="num">0</span></div>
+          <div class="handcount" id="hand-${opp}" title="Cards in opponent's hand"><span class="hc-card"></span><span class="num">0</span></div>
+          <div class="deckpile" id="deck-${opp}" title="Cards left in deck"><span class="stack"></span><span class="num">0</span></div>
         </div>
       </div>
       <div class="boardwrap"><div class="board">${[0,1,2,3,4].map(laneEl).join('')}</div></div>
@@ -2466,10 +2548,10 @@ function buildMatchDOM(){
       <div class="thinking" id="thinking"><span class="d"></span><span class="d"></span><span class="d"></span> Rival is plotting…</div>
       <div class="hud bottom">
         ${heroPlate(human)}
-        <div class="energy"><span class="lbl" id="enlbl">0/0</span><div class="pips" id="pips"></div><span class="energy-name">energy</span></div>
+        <div class="energy push"><span class="lbl" id="enlbl">0/0</span><div class="pips" id="pips"></div><span class="energy-name">energy</span></div>
         <div class="counts" id="counts-${human}">
-          <div class="ct hand"><span class="ci">✋</span><span class="num" id="hand-${human}">0</span></div>
-          <div class="deckpile" id="deck-${human}"><span class="stack"></span><span class="num">0</span></div>
+          <div class="handcount" id="hand-${human}" title="Cards in your hand"><span class="hc-card"></span><span class="num">0</span></div>
+          <div class="deckpile" id="deck-${human}" title="Cards left in deck"><span class="stack"></span><span class="num">0</span></div>
         </div>
         <div class="controls">
           <button class="btn power" id="powerbtn"><span class="pc"></span>Power</button>
@@ -2631,7 +2713,7 @@ function updateHud(){
     const val=dom.hpEl[side].querySelector('.val'); val.textContent=p.hp;
     // deck may be a number (online fog snapshot) or an array (local) — handle both
     dom.deckEl[side].textContent = (typeof p.deck==='number') ? p.deck : p.deck.length;
-    if(dom.handEl && dom.handEl[side]) dom.handEl[side].textContent = p.hand ? p.hand.length : 0;
+    if(dom.handEl && dom.handEl[side]){ const n=dom.handEl[side].querySelector('.num'); if(n) n.textContent = p.hand ? p.hand.length : 0; }
     if(dom.blockseg && dom.blockseg[side]){
       const segs=dom.blockseg[side];
       const prev=dom.blockPrev?dom.blockPrev[side]:0;
@@ -2840,27 +2922,36 @@ function showTipFor(iid, anchorEl){
   const inst=state.players[state.humanSide].hand.find(h=>h.iid===iid); if(!inst) return;
   const c=getCard(inst.cardId);
   const isUnit=c.type==='unit';
+  const sup=inst.super||c.super;
+  const dispCost=sup?1:c.cost;
   const vanilla = isUnit && (!c.kw||!c.kw.length) && !c.eff;
-  const kwHtml=(c.kw&&c.kw.length)? `<div class="tip-kw">${c.kw.map(k=>`<div class="tip-kwrow">${kwIcon(k)}<span><b>${k}</b> — ${KW_TEXT[k]||''}</span></div>`).join('')}</div>`
-    : vanilla? `<div class="tip-kw"><div class="tip-kwrow" style="opacity:.7">No special ability — a straightforward fighter.</div></div>`:'';
-  const statHtml=isUnit? `<div class="tip-stats"><span class="tip-stat" style="color:#ffd05a">${ICON.atkbg}&nbsp;${c.atk}</span><span class="tip-stat" style="color:#ff6b78">${ICON.hpbg}&nbsp;${c.hp}</span></div>`:'';
   const rar=(c.rar||'Common').toLowerCase();
-  const typeLabel = c.super?'Superpower':isUnit?(vanilla?'Unit · Vanilla':'Unit'):'Trick / Spell';
+  const typeLabel = sup?'Superpower':isUnit?(vanilla?'Unit':'Unit'):'Trick';
+  const facLabel = c.fac==='prism'?'Prism':c.fac==='super'?'Signature':facName(c.fac);
+  const kwHtml=(c.kw&&c.kw.length)
+    ? `<div class="tip-kw">${c.kw.map(k=>`<div class="tip-kwrow">${kwIcon(k)}<span><b>${k}</b> — ${KW_TEXT[k]||''}</span></div>`).join('')}</div>` : '';
+  const statHtml=isUnit
+    ? `<div class="tip-stats"><span class="tip-stat atk">${ICON.atkbg}<i>${c.atk}</i></span><span class="tip-stat hp">${ICON.hpbg}<i>${c.hp}</i></span></div>`:'';
+  dom.cardtip.className='cardtip preview r-'+rar;
   dom.cardtip.innerHTML=`
-    <div class="tip-head">
-      <span class="tip-cost">${ICON.cost}<span>${c.cost}</span></span>
-      <span><div class="tip-name">${c.name}</div><div class="tip-type">${typeLabel}</div></span>
-    </div>
-    ${statHtml}${kwHtml}
-    ${c.text?`<div class="tip-desc">${c.text}</div>`:''}
-    <span class="tip-rar r-${rar}">${c.rar||'Common'}</span>`;
+    <div class="tipbackdrop"></div>
+    <div class="tipcard r-${rar}" style="--hue:${H[c.fac]||320}">
+      <div class="tc-art">${creature(c.shape,H[c.fac]||320)}
+        <span class="tc-cost">${ICON.cost}<span>${dispCost}</span></span>
+        ${isUnit?`<span class="tc-hp">${ICON.hpbg}<i>${c.hp}</i></span>`:''}
+      </div>
+      <div class="tc-name">${c.name}</div>
+      <div class="tc-type">— ${facLabel} ${typeLabel} —</div>
+      <div class="tc-body">
+        ${isUnit?`<div class="tc-stats">${statHtml}</div>`:''}
+        ${c.text?`<div class="tc-desc">${c.text}</div>`:(vanilla?`<div class="tc-desc dim">A straightforward fighter.</div>`:'')}
+        ${kwHtml}
+      </div>
+      <div class="tc-rar r-${rar}">${(c.rar||'Common').toUpperCase()}</div>
+    </div>`;
   dom.cardtip.hidden=false;
-  // position above the card, clamped to viewport
-  const r=anchorEl.getBoundingClientRect();
-  const tw=dom.cardtip.offsetWidth, th=dom.cardtip.offsetHeight;
-  let left=r.left+r.width/2-tw/2; left=Math.max(8, Math.min(window.innerWidth-tw-8, left));
-  let top=r.top-th-12; if(top<8) top=r.bottom+12;
-  dom.cardtip.style.left=left+'px'; dom.cardtip.style.top=top+'px';
+  // centered preview — no manual positioning needed (CSS centers it)
+  dom.cardtip.style.left=''; dom.cardtip.style.top='';
 }
 function onHandPointerDown(e){
   if(!humanActive) return;
